@@ -21,17 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.header');
     const headerNavItems = document.querySelectorAll('header nav ul li:not(.login_btn)');
 
-    // nav 인디케이터 메인 제외
     window.navTargetSections = Array.from(sections).filter(section => !section.classList.contains('main'));
-
-    // 스크롤 섹션
     window.scrollSections = [...sections, footer];
 
     let currentIndex = 0;
     let isAnimating = false;
     const maxIndex = scrollSections.length - 1;
+    let justLeftFooter = false;
 
-    // 초기 white 적용
     header.classList.add('white');
     fullpageNav.classList.add('white');
 
@@ -45,16 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentSection = scrollSections[currentIndex];
         const navIndex = navTargetSections.indexOf(currentSection);
 
-        // fullpage_nav 표시
         fullpageNav.style.display = currentSection.classList.contains('main') ? 'none' : 'block';
 
-        // white 클래스
         const whiteSections = ['main', 'sc03'];
         const isWhite = whiteSections.some(cls => currentSection.classList.contains(cls));
         header.classList.toggle('white', isWhite);
         fullpageNav.classList.toggle('white', isWhite);
 
-        // nav 인디케이터 on/off
         navItems.forEach((li, i) => {
             li.classList.toggle('on', i === navIndex);
         });
@@ -92,9 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
         isAnimating = true;
 
         const target = scrollSections[index];
-        const targetY = target.offsetTop;
+        const isLeavingFooter = scrollSections[currentIndex]?.tagName === 'FOOTER';
 
-        // footer일 경우 속도 느리게
+        if (isLeavingFooter && index < currentIndex) {
+            justLeftFooter = true;
+            setTimeout(() => { justLeftFooter = false; }, 500);
+        }
+
+        const targetY = target.offsetTop;
         const isFooter = target.tagName === 'FOOTER';
         smoothScrollTo(targetY, isFooter ? 1400 : 1000);
 
@@ -127,39 +126,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Wheel
     window.addEventListener('wheel', (e) => {
-    if (window.isFullpageLocked) return;
+        if (window.isFullpageLocked) return;
 
-    const targetInner = e.target.closest('.inner');
-    if (targetInner) {
-        const deltaY = e.deltaY;
-        const scrollTop = targetInner.scrollTop;
-        const scrollHeight = targetInner.scrollHeight;
-        const clientHeight = targetInner.clientHeight;
+        const targetInner = e.target.closest('.inner');
+        if (targetInner && !justLeftFooter) {
+            const deltaY = e.deltaY;
+            const scrollTop = targetInner.scrollTop;
+            const scrollHeight = targetInner.scrollHeight;
+            const clientHeight = targetInner.clientHeight;
 
-        const isScrollable = scrollHeight > clientHeight;
-        const isAtTop = scrollTop === 0;
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+            const isScrollable = scrollHeight > clientHeight;
+            const isAtTop = scrollTop === 0;
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
-        if (!isScrollable) {
-            e.preventDefault();
-            const direction = deltaY > 0 ? 'down' : 'up';
-            handleScroll(direction);
-        } else {
-            if (deltaY < 0 && isAtTop) {
+            if (!isScrollable) {
                 e.preventDefault();
-                handleScroll('up');
-            } else if (deltaY > 0 && isAtBottom) {
-                e.preventDefault();
-                handleScroll('down');
+                const direction = deltaY > 0 ? 'down' : 'up';
+                handleScroll(direction);
+            } else {
+                if (deltaY < 0 && isAtTop) {
+                    e.preventDefault();
+                    handleScroll('up');
+                } else if (deltaY > 0 && isAtBottom) {
+                    e.preventDefault();
+                    handleScroll('down');
+                }
             }
+        } else {
+            e.preventDefault();
+            const direction = e.deltaY > 0 ? 'down' : 'up';
+            handleScroll(direction);
         }
-    } else {
-        e.preventDefault();
-        const direction = e.deltaY > 0 ? 'down' : 'up';
-        handleScroll(direction);
-    }
-}, { passive: false });
-
+    }, { passive: false });
 
     // Touch
     let startY = 0;
@@ -168,8 +166,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('touchend', (e) => {
+        if (window.isFullpageLocked) return;
+
         const endY = e.changedTouches[0].clientY;
         const delta = endY - startY;
+
+        if (justLeftFooter) {
+            if (delta > 30) handleScroll('up');
+            else if (delta < -30) handleScroll('down');
+            return;
+        }
+
+        const touchedInner = e.target.closest('.inner');
+        if (touchedInner) {
+            const scrollTop = touchedInner.scrollTop;
+            const scrollHeight = touchedInner.scrollHeight;
+            const clientHeight = touchedInner.clientHeight;
+
+            const isAtTop = scrollTop === 0;
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+            if (delta > 30 && isAtTop) {
+                handleScroll('up');
+            } else if (delta < -30 && isAtBottom) {
+                handleScroll('down');
+            }
+            return;
+        }
+
         if (delta > 30) handleScroll('up');
         else if (delta < -30) handleScroll('down');
     });
