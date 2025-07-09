@@ -1,0 +1,114 @@
+@charset 'utf-8';
+@use "sass:math";
+
+$font-name: "Pretendard", sans-serif;
+$base-rem-size: 10;
+
+// 단위 제거
+@function remove-unit($value) {
+  @return math.div($value, $value * 0 + 1);
+}
+
+// rem 계산
+@function rem($px, $base: $base-rem-size) {
+  @return math.div($px, $base) * 1rem;
+}
+
+@mixin ftL {
+    font-family: $font-name;
+    font-weight: 300;
+}
+
+@mixin ftR {
+    font-family: $font-name;
+    font-weight: 400;
+}
+
+@mixin ftM {
+    font-family: $font-name;
+    font-weight: 500;
+}
+
+@mixin ftSB {
+    font-family: $font-name;
+    font-weight: 600;
+}
+
+@mixin ftB {
+    font-family: $font-name;
+    font-weight: 700;
+}
+
+
+/* layout */
+@mixin flex($align, $justify, $gap:0, $direction: row) {
+    display: flex;
+    align-items: $align;
+    justify-content: $justify;
+    gap: $gap;
+    flex-direction: $direction;
+}
+
+@mixin centerX($type: absolute, $top: null, $bottom: null) {
+    @if($type==fixed or $type==absolute) {
+        position: $type;
+        left: 50%;
+        top: $top;
+        bottom: $bottom;
+        transform: translateX(-50%);
+    }
+}
+
+@mixin centerY($type: absolute, $left: null, $right: null) {
+    @if($type==fixed or $type==absolute) {
+        position: $type;
+        top: 50%;
+        left: $left;
+        right: $right;
+        transform: translateY(-50%);
+    }
+}
+
+@mixin centerXY($type: absolute) {
+    @if($type==fixed or $type==absolute) {
+        position: $type;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@mixin absolute($top: null, $left: null, $bottom: null, $right: null) {
+    position: absolute;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+@mixin fixed($top: null, $left: null, $bottom: null, $right: null) {
+    position: fixed;
+    top: $top;
+    left: $left;
+    bottom: $bottom;
+    right: $right;
+}
+
+@mixin content($display: inline-block) {
+    content: '';
+    display: $display;
+}
+
+@mixin scroll {
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #d8d8d8;
+        border-radius: 2.5px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}

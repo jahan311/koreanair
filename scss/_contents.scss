@@ -1,0 +1,1218 @@
+@charset 'utf-8';
+
+.mo_br {
+    display: none;
+}
+
+.wrap {
+    position: relative;
+    background: $white;
+
+    .mo_br {
+        display: none;
+    }
+
+    .fullpage {
+        header {
+            z-index: 10;
+            @include fixed(0, 0);
+            width: 100%;
+            padding: rem(30) rem(50) rem(30) rem(70);
+            @include flex(center, space-between);
+
+            .logo {
+                a {
+                    display: block;
+                    width: rem(194);
+                    height: rem(36);
+                    font-size: 0;
+                    @include img_logo;
+                }
+            }
+
+            nav {
+                ul {
+                    @include flex(center, flex-end, rem(50));
+
+                    li {
+                        &:not(.login_btn) {
+                            @include ftR;
+                            font-size: rem(18);
+                            text-align: center;
+                            color: $ft-nav-color;
+                            cursor: pointer;
+                            transition: all 0.5s;
+                            border-bottom: 2px solid transparent;
+
+                            &.on {
+                                padding-bottom: rem(4);
+                                color: $ft-nav-on-color;
+                                border-bottom: 2px solid $ft-nav-on-color;
+                            }
+
+                            &:hover {
+                                padding-bottom: rem(4);
+                                color: $ft-nav-on-color;
+                                border-bottom: 2px solid $ft-nav-on-color;
+                            }
+
+                        }
+
+                        &.login_btn {
+                            a {
+                                position: relative;
+                                display: block;
+                                padding: rem(12) rem(30);
+                                border: 1px solid $point;
+                                animation: cubic-bezier(0.4, 0, 0.2, 1) both;
+                                overflow: hidden;
+                                border-radius: rem(20);
+
+                                p {
+                                    position: relative;
+                                    z-index: 1;
+                                    @include ftM;
+                                    font-size: rem(14);
+                                    color: $point;
+                                    text-align: center;
+                                }
+
+                                &::after {
+                                    @include content;
+                                    width: 0;
+                                    height: 100%;
+                                    background-color: #d5edff;
+                                    opacity: 0.25;
+                                    position: absolute;
+                                    left: 50%;
+                                    top: 0;
+                                    transform: translate(-50%, 0);
+                                    transition: width 0.5s;
+                                }
+
+                                &:hover {
+                                    &::after {
+                                        width: 100%;
+                                        border-radius: rem(20);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .mo_nav_btn {
+                display: none;
+                z-index: 101;
+                cursor: pointer;
+
+                .line {
+                    width: rem(22);
+                    height: rem(2);
+                    background: $ft-main-color;
+                    transition: all 0.3s ease-in-out;
+                    border-radius: rem(5);
+                }
+
+                &.on {
+                    display: block;
+                    transition: all 0.3s ease-in-out;
+                    transition-delay: 0.6s;
+                    transform: rotate(45deg);
+
+                    .line {
+                        width: rem(25);
+                        background: $white !important;
+
+                        &:nth-child(2) {
+                            opacity: 0;
+                            width: 0;
+                            height: 0;
+                        }
+
+                        &:nth-child(3) {
+                            transform: translateY(rem(-1.5)) rotate(-90deg);
+                        }
+                    }
+                }
+            }
+
+            .mo_nav {
+                &.hide {
+                    opacity: 0;
+                    right: -100%;
+                }
+
+                position: fixed;
+                top: 0;
+                right: 0;
+                opacity: 1;
+                width: 100vw;
+                height: 100vh;
+                background: #00011f;
+                overflow-y: hidden;
+                transition: all 0.3s ease-in-out;
+                padding: rem(25) rem(30);
+                z-index: 100;
+
+                .login_btn {
+                    display: inline-block;
+                    border-radius: rem(20);
+                    border: 1px solid $white;
+                    @include ftM;
+                    font-size: rem(14);
+                    text-align: center;
+                    color: $white;
+                    padding: rem(12) rem(30);
+                }
+
+                ul {
+                    margin-top: rem(100);
+                    width: 100%;
+
+                    li {
+                        @include ftB;
+                        font-size: rem(25);
+                        color: $white;
+
+                        &+li {
+                            margin-top: rem(50);
+                        }
+                    }
+                }
+            }
+
+            &.white {
+                .logo {
+                    a {
+                        @include img_logo_white;
+                    }
+                }
+
+                nav {
+                    ul {
+                        li {
+                            &:not(.login_btn) {
+                                color: $white;
+
+                                &.on {
+                                    color: $white;
+                                    border-bottom: 2px solid $white;
+                                }
+
+                                &:hover {
+                                    color: $white;
+                                    border-bottom: 2px solid $white;
+                                }
+
+                            }
+
+                            &.login_btn {
+                                a {
+                                    border: 1px solid $white;
+
+                                    p {
+                                        color: $white;
+                                    }
+
+                                    &::after {
+                                        background-color: $white;
+                                        opacity: 0.1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .mo_nav_btn {
+                    .line {
+                        background: $white;
+                    }
+                }
+            }
+        }
+
+        .full_section {
+            width: 100%;
+
+            &.main {
+                background: linear-gradient(132deg, #04d2fc 4%, #0d90fa 26%, #3778f2 65%);
+
+                &::before {
+                    @include content;
+                    @include absolute($bottom: 0, $right: rem(10));
+                    @include img_main_txt;
+                    width: 85%;
+                    max-width: rem(1544);
+                    aspect-ratio: 1544/161;
+                }
+
+                .inner {
+                    @include flex(center, space-between);
+
+                    &::after {
+                        @include content;
+                        @include img_main_object;
+                        width: 50%;
+                        max-width: rem(700);
+                        aspect-ratio: 700/446;
+                    }
+
+                    .txt {
+                        h5 {
+                            @include ftB;
+                            font-size: rem(100);
+                            line-height: rem(110);
+                            letter-spacing: rem(5);
+                            color: $white;
+                        }
+
+                        >p {
+                            margin-top: rem(20);
+                            @include ftL;
+                            font-size: rem(22);
+                            letter-spacing: rem(-0.44);
+                            color: $white;
+                        }
+
+                        .btn_box {
+                            margin-top: rem(60);
+                            @include flex(center, flex-start, rem(10));
+
+                            .go_contact_btn {
+                                position: relative;
+                                width: rem(220);
+                                height: rem(60);
+                                border-radius: rem(30);
+                                background: #0f3271;
+                                animation: cubic-bezier(0.4, 0, 0.2, 1) both;
+                                overflow: hidden;
+
+                                &::after {
+                                    @include content;
+                                    width: 0;
+                                    height: 100%;
+                                    background-color: #0a275b;
+                                    position: absolute;
+                                    left: 50%;
+                                    top: 0;
+                                    transform: translate(-50%, 0);
+                                    transition: width 0.5s;
+                                }
+
+                                p {
+                                    position: relative;
+                                    z-index: 1;
+                                    @include ftM;
+                                    font-size: rem(20);
+                                    letter-spacing: rem(-0.4);
+                                    color: $white;
+                                    text-align: center;
+
+                                    &::after {
+                                        @include content;
+                                        @include ico_down(rem(15), rem(15), $white);
+                                        margin-left: rem(10);
+                                    }
+                                }
+
+                                &:hover {
+                                    &::after {
+                                        border-radius: rem(30);
+                                        width: 100%;
+                                    }
+                                }
+                            }
+
+                            .down_btn {
+                                position: relative;
+                                display: block;
+                                width: rem(220);
+                                height: rem(60);
+                                border-radius: rem(30);
+                                background: $white;
+                                animation: cubic-bezier(0.4, 0, 0.2, 1) both;
+                                overflow: hidden;
+
+                                &::after {
+                                    @include content;
+                                    width: 0;
+                                    height: 100%;
+                                    background-color: #d5edff;
+                                    position: absolute;
+                                    left: 50%;
+                                    top: 0;
+                                    transform: translate(-50%, 0);
+                                    transition: width 0.5s;
+                                }
+
+                                p {
+                                    position: relative;
+                                    z-index: 1;
+                                    @include ftM;
+                                    font-size: rem(20);
+                                    letter-spacing: rem(-0.4);
+                                    color: #0f3271;
+                                    text-align: center;
+                                    line-height: rem(60);
+
+                                    &::after {
+                                        @include content;
+                                        @include ico_down(rem(15), rem(15), #0f3271);
+                                        margin-left: rem(10);
+                                    }
+                                }
+
+                                &:hover {
+                                    &::after {
+                                        border-radius: rem(30);
+                                        width: 100%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.sc01 {
+                background: $white;
+
+                .inner {
+                    padding: rem(150) 0 0;
+
+                    .tit {
+                        @include ftB;
+                        font-size: rem(60);
+                        line-height: rem(75);
+                        color: $ft-main-color;
+                        letter-spacing: rem(-1.2);
+
+                        strong {
+                            @include ftB;
+                            font-size: rem(60);
+                            line-height: rem(75);
+                            color: $point;
+                            letter-spacing: rem(-1.2);
+                        }
+                    }
+
+                    .desc {
+                        margin-top: rem(15);
+                        @include ftL;
+                        font-size: rem(18);
+                        color: $ft-dark-gray;
+                        letter-spacing: rem(-0.36);
+                    }
+
+                    .service_box {
+                        margin-top: rem(50);
+                        position: relative;
+                        width: 100%;
+
+                        .control_btn {
+                            @include absolute($top: rem(-97), $right:0);
+                            @include flex(center, flex-end, rem(5));
+
+                            button {
+                                width: rem(72);
+                                height: rem(72);
+                                background: $white;
+                                border: 1px solid #dedede;
+                                border-radius: 50%;
+                                font-size: 0;
+                                transition: all 0.5s;
+
+                                &::before {
+                                    @include content;
+                                    transition: all 0.5s;
+                                }
+
+                                &.prev_btn {
+                                    &::before {
+                                        @include ico_arrow_left(rem(23), rem(18), $ft-dark-gray)
+                                    }
+                                }
+
+                                &.next_btn {
+                                    &::before {
+                                        @include ico_arrow_right(rem(23), rem(18), $ft-dark-gray)
+                                    }
+                                }
+
+                                &:hover {
+                                    border: 1px solid $point;
+
+                                    &::before {
+                                        background-color: $point;
+                                    }
+                                }
+                            }
+                        }
+
+                        .slider_wrap {
+                            overflow: hidden;
+                            position: relative;
+                            width: 100%;
+                        }
+
+                        .slider_track {
+                            display: flex;
+                            transition: transform 0.6s ease-in-out;
+                            transform: translateX(-100%);
+
+                            .service_01 {
+                                flex-shrink: 0;
+                                width: 100%;
+                                padding: rem(75) rem(100) rem(53);
+                                @include img_sc01_bg;
+                                border-radius: rem(30);
+
+                                p {
+                                    @include ftB;
+                                    font-size: rem(35);
+                                    color: $white;
+                                    letter-spacing: rem(-0.7);
+                                }
+
+                                ul {
+                                    margin-top: rem(20);
+
+                                    li {
+                                        @include ftR;
+                                        font-size: rem(18);
+                                        color: $white;
+                                        letter-spacing: rem(-0.36);
+                                        line-height: rem(40);
+                                        list-style-image: url("../images/ico_check.svg");
+                                        margin-left: rem(26);
+                                        padding-left: rem(4);
+                                    }
+                                }
+
+                                img {
+                                    margin-top: rem(50);
+                                    width: 100%;
+                                    object-fit: contain;
+                                }
+                            }
+
+                            .service_02 {
+                                flex-shrink: 0;
+                                width: 100%;
+                                padding: rem(65);
+                                background: #f1f4f7;
+                                border-radius: rem(30);
+
+                                >ul {
+                                    @include flex(center, space-between);
+
+                                    .card {
+                                        position: relative;
+                                        padding: rem(40);
+                                        border-radius: rem(30);
+                                        background: $white;
+                                        width: rem(400);
+                                        height: rem(400);
+
+                                        >span {
+                                            @include ftR;
+                                            font-size: rem(15);
+                                            letter-spacing: rem(-0.3);
+                                            color: $point;
+                                        }
+
+                                        p {
+                                            margin-top: rem(6);
+                                            @include ftB;
+                                            font-size: rem(25);
+                                            line-height: rem(38);
+                                            color: $ft-main-color;
+                                            letter-spacing: rem(-0.5);
+                                        }
+
+                                        ul {
+                                            margin-top: rem(24);
+
+                                            li {
+                                                @include flex(flex-start, flex-start, rem(8));
+
+                                                .ico_check {
+                                                    flex-shrink: 0;
+                                                    @include img_check;
+                                                    width: 15px;
+                                                    height: 15px;
+                                                    margin-top: rem(3);
+                                                }
+
+                                                .txt {
+                                                    flex-shrink: 0;
+                                                    @include ftM;
+                                                    font-size: rem(15);
+                                                    line-height: rem(23);
+                                                    letter-spacing: rem(-0.3);
+                                                    color: #656f83;
+                                                    word-break: keep-all;
+                                                    max-width: rem(277);
+                                                }
+
+                                                &+li {
+                                                    margin-top: rem(15);
+                                                }
+                                            }
+                                        }
+
+                                        &::before {
+                                            @include content;
+                                            width: rem(120);
+                                            height: rem(120);
+                                            @include absolute($bottom: rem(20), $right: rem(30));
+                                        }
+
+                                        &:first-child {
+                                            &::before {
+                                                @include img_sc01_ico1;
+                                            }
+                                        }
+
+                                        &:nth-child(2) {
+                                            ul {
+                                                li:first-child {
+                                                    .txt {
+                                                        max-width: rem(250);
+                                                    }
+                                                }
+                                            }
+
+                                            &::before {
+                                                @include img_sc01_ico2;
+                                            }
+                                        }
+
+                                        &:last-child {
+                                            ul {
+                                                li:first-child {
+                                                    .txt {
+                                                        max-width: rem(250);
+                                                    }
+                                                }
+                                            }
+
+                                            &::before {
+                                                @include img_sc01_ico3;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.sc02 {
+                background: #fafafc;
+                .inner {
+                    padding: rem(150) 0 0;
+
+                    .tit {
+                        @include ftB;
+                        font-size: rem(60);
+                        line-height: rem(75);
+                        color: $ft-main-color;
+                        letter-spacing: rem(-1.2);
+                    }
+
+                    .tab_box {
+                        @include flex(center, space-between);
+                        margin-top: rem(90);
+
+                        .tab {
+                            li {
+                                max-height: rem(94);
+                                overflow: hidden;
+                                transition: max-height 0.3s ease;
+
+                                .tab_tit {
+                                    width: rem(250);
+                                    height: rem(64);
+                                    line-height: rem(64);
+                                    text-align: center;
+                                    background-color: #a8c1de;
+                                    border-radius: rem(32);
+                                    @include ftB;
+                                    font-size: rem(22);
+                                    color: $white;
+                                    letter-spacing: rem(-0.44);
+                                    transition: all 0.5s;
+                                    cursor: pointer;
+                                    margin-bottom: rem(30);
+                                }
+
+                                .txt {
+                                    max-width: rem(510);
+                                    @include ftR;
+                                    font-size: rem(20);
+                                    line-height: rem(30);
+                                    letter-spacing: rem(-0.4);
+                                    color: $ft-dark-gray;
+                                    word-break: keep-all;
+                                    margin-bottom: rem(30);
+                                    opacity: 0;
+                                    overflow: hidden;
+                                    max-height: 0;
+                                    transition: max-height 0.3s ease, opacity 0.3s ease;
+
+                                    span {
+                                        @include ftR;
+                                        font-size: rem(20);
+                                        line-height: rem(30);
+                                        letter-spacing: rem(-0.4);
+                                        color: $point;
+                                        word-break: keep-all;
+                                    }
+                                }
+
+                                &.active {
+                                    max-height: rem(500);
+
+                                    .tab_tit {
+                                        background: $point;
+                                    }
+
+                                    .txt {
+                                        opacity: 1;
+                                        max-height: rem(500);
+                                    }
+                                }
+                            }
+                        }
+
+                        .tab_contents {
+                            width: 70%;
+                            max-width: rem(748);
+
+                            li {
+                                opacity: 0;
+                                max-height: 0;
+                                overflow: hidden;
+                                transition: max-height 0.3s ease, opacity 0.3s ease;
+
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: contain;
+                                }
+
+                                &.show {
+                                    opacity: 1;
+                                    max-height: rem(510);
+                                }
+
+                                .txt {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.sc03 {
+                background: $point;
+
+                .inner {
+                    @include flex(center, space-between);
+
+                    .txt {
+                        .tit {
+                            @include ftB;
+                            font-size: rem(60);
+                            line-height: rem(75);
+                            letter-spacing: rem(-1.2);
+                            color: $white;
+                        }
+
+                        .desc {
+                            margin-top: rem(30);
+                            @include ftR;
+                            font-size: rem(22);
+                            line-height: rem(33);
+                            letter-spacing: rem(-0.44);
+                            word-break: keep-all;
+                            max-width: rem(330);
+                            color: $white;
+                        }
+                    }
+
+                    .device {
+                        @include flex(flex-start, center, rem(10));
+
+                        >div {
+                            .label {
+                                @include ftSB;
+                                font-size: rem(20);
+                                letter-spacing: rem(-0.4);
+                                color: $white;
+                                width: rem(130);
+                                padding: rem(8) 0;
+                                border-radius: rem(20);
+                                background: #1d3a7d;
+                                text-align: center;
+                                margin: 0 auto;
+                            }
+
+                            .txt {
+                                margin-top: rem(12);
+                                @include ftR;
+                                font-size: rem(18);
+                                line-height: rem(25);
+                                letter-spacing: rem(-0.36);
+                                color: $white;
+                                text-align: center;
+                            }
+
+                            &.pc {
+                                &::before {
+                                    @include content;
+                                    @include img_sc03_pc;
+                                    width: rem(627);
+                                    aspect-ratio: 627/421;
+                                }
+                            }
+
+                            &.mo {
+                                &::before {
+                                    @include content;
+                                    @include img_sc03_mo;
+                                    width: rem(223);
+                                    aspect-ratio: 223/421;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.sc04 {
+                .inner {
+                    padding: rem(150) 0 0;
+
+                    .tit {
+                        @include ftB;
+                        font-size: rem(60);
+                        letter-spacing: rem(-1.2);
+                        color: $ft-main-color;
+                        line-height: rem(75);
+                    }
+
+                    .desc {
+                        margin-top: rem(15);
+                        @include ftL;
+                        font-size: rem(18);
+                        line-height: rem(30);
+                        letter-spacing: rem(-0.36);
+                        color: $ft-dark-gray;
+                    }
+
+                    .contact_box {
+                        margin-top: rem(80);
+                        position: relative;
+                        @include flex(flex-start, space-between);
+
+                        .input_box {
+                            position: relative;
+
+                            label {
+                                display: block;
+                                @include ftSB;
+                                font-size: rem(18);
+                                line-height: rem(22);
+                                color: $ft-main-color;
+
+                                &::before {
+                                    content: '* ';
+                                    @include ftSB;
+                                    font-size: rem(18);
+                                    line-height: rem(22);
+                                    color: #ff0000;
+                                }
+                            }
+
+                            input {
+                                margin-top: rem(24);
+                                position: relative;
+                                width: 100%;
+                                padding: 0 rem(18) rem(10) rem(10);
+                                border-bottom: 1px solid $bd-color;
+                                transition: all 0.5s;
+                                @include ftR;
+                                font-size: rem(16);
+                                color: $ft-main-color;
+
+                                &:focus {
+                                    border-bottom: 1px solid $point;
+                                }
+
+                                &::placeholder {
+                                    @include ftR;
+                                    font-size: rem(16);
+                                    color: $ft-sub-color;
+                                }
+
+                            }
+
+                            textarea {
+                                margin-top: rem(20);
+                                position: relative;
+                                resize: none;
+                                width: 100%;
+                                height: rem(290);
+                                border-radius: rem(8);
+                                border: 1px solid $bd-color;
+                                padding: rem(20);
+                                outline: none;
+                                transition: all 0.5s;
+                                @include ftR;
+                                font-size: rem(16);
+                                line-height: rem(26);
+                                color: $ft-main-color;
+                                @include scroll;
+
+                                &:focus {
+                                    border: 1px solid $point;
+                                }
+
+                                &::placeholder {
+                                    @include ftR;
+                                    font-size: rem(16);
+                                    color: $ft-sub-color;
+                                }
+                            }
+                        }
+
+                        .select_box {
+                            position: relative;
+                            width: calc(50% - 25px);
+
+                            label {
+                                display: block;
+                                @include ftSB;
+                                font-size: rem(18);
+                                line-height: rem(22);
+                                color: $ft-main-color;
+
+                                &::before {
+                                    content: '* ';
+                                    @include ftSB;
+                                    font-size: rem(18);
+                                    line-height: rem(22);
+                                    color: #ff0000;
+                                }
+                            }
+
+                            .custom_select {
+                                position: relative;
+                                width: 100%;
+
+                                button {
+                                    position: relative;
+                                    width: 100%;
+                                    text-align: left;
+                                    margin-top: rem(24);
+                                    @include ftR;
+                                    font-size: rem(16);
+                                    color: $ft-sub-color;
+                                    padding: 0 rem(10) rem(10);
+                                    border-bottom: 1px solid $bd-color;
+                                    cursor: pointer;
+
+                                    &::after {
+                                        @include content;
+                                        @include ico_arrow_down(rem(14), rem(7), $ft-main-color);
+                                        @include centerY($right:rem(12));
+                                    }
+
+                                    &:hover {
+                                        border-bottom: 1px solid #707070;
+                                    }
+
+                                }
+
+                                ul {
+                                    position: absolute;
+                                    width: 100%;
+                                    border-radius: rem(8);
+                                    border: 1px solid transparent;
+                                    left: 0;
+                                    max-height: 0;
+                                    overflow: hidden;
+                                    transition: max-height 0.3s ease, opacity 0.3s ease;
+                                    background: $white;
+                                    z-index: 1;
+
+                                    li {
+                                        width: 100%;
+                                        @include ftR;
+                                        font-size: rem(16);
+                                        color: $ft-main-color;
+                                        background-color: $white;
+                                        padding: rem(10);
+                                        cursor: pointer;
+                                        opacity: 0;
+                                        transform: translateY(-10px);
+                                        transition: opacity 0.3s ease, transform 0.3s ease, color 0.5s, background-color 0.5s;
+
+                                        &:first-child {
+                                            padding: rem(16) rem(10) rem(10);
+                                        }
+
+                                        &:last-child {
+                                            padding: rem(10) rem(10) rem(16);
+                                        }
+
+                                        &:hover {
+                                            background-color: #ecf4fb;
+                                            color: $point;
+                                        }
+                                    }
+                                }
+
+                                &.show {
+                                    button {
+                                        border-bottom: 1px solid $bd-color;
+
+                                        &:hover {
+                                            border-bottom: 1px solid $bd-color;
+                                        }
+                                    }
+
+                                    ul {
+                                        max-height: 1000px;
+                                        opacity: 1;
+                                        border: 1px solid #707070;
+
+                                        li {
+                                            opacity: 1;
+                                            transform: translateY(0);
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+
+                        .left {
+                            position: relative;
+                            width: 60%;
+                            max-width: rem(770);
+
+                            .row {
+                                margin-top: rem(50);
+                                @include flex(flex-start, space-between);
+
+                                .input_box {
+                                    width: calc(50% - 25px);
+
+                                    span {
+                                        @include absolute($right:0, $bottom:rem(12));
+                                        @include ftR;
+                                        font-size: rem(16);
+                                        color: $ft-main-color;
+                                    }
+                                }
+                            }
+                        }
+
+                        .right {
+                            position: relative;
+                            width: 40%;
+                            max-width: rem(520);
+
+                            .input_box {
+                                .count {
+                                    @include absolute($right: 10px, $bottom: 10px);
+                                    @include ftR;
+                                    font-size: rem(13);
+                                    color: $ft-sub-color;
+                                    background-color: $white;
+
+                                    span {
+                                        @include ftR;
+                                        font-size: rem(13);
+                                        color: $ft-sub-color;
+                                    }
+                                }
+                            }
+
+                            .checkbox {
+                                margin: rem(20) auto 0;
+                                text-align: center;
+
+                                input[type=checkbox] {
+                                    display: none;
+
+                                    &+label {
+                                        @include ftR;
+                                        font-size: rem(15);
+                                        color: $ft-main-color;
+                                        cursor: pointer;
+
+                                        &::before {
+                                            @include content;
+                                            @include img_checkbox;
+                                            width: rem(20);
+                                            height: rem(20);
+                                            margin-right: rem(8);
+                                            vertical-align: middle;
+                                        }
+                                    }
+
+                                    &:checked+label {
+                                        &::before {
+                                            @include img_checkbox_on;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .contact_btn {
+                                margin-top: rem(20);
+                                position: relative;
+                                width: 100%;
+                                height: rem(60);
+                                border-radius: rem(30);
+                                background: $point;
+                                animation: cubic-bezier(0.4, 0, 0.2, 1) both;
+                                overflow: hidden;
+
+                                &::after {
+                                    @include content;
+                                    width: 0;
+                                    height: 100%;
+                                    background-color: #1d75d5;
+                                    position: absolute;
+                                    left: 50%;
+                                    top: 0;
+                                    transform: translate(-50%, 0);
+                                    transition: width 0.5s;
+                                }
+
+                                p {
+                                    position: relative;
+                                    z-index: 1;
+                                    @include ftM;
+                                    font-size: rem(20);
+                                    letter-spacing: rem(-0.4);
+                                    color: $white;
+                                    text-align: center;
+                                }
+
+                                &:hover {
+                                    &::after {
+                                        border-radius: rem(30);
+                                        width: 100%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        footer {
+            position: relative;
+            background: $footer-bg-color;
+
+            .inner {
+                padding: rem(63) 0 rem(68);
+
+                .company {
+                    @include ftM;
+                    font-size: rem(16);
+                    color: $white;
+                }
+
+                div {
+                    &.info {
+                        margin-top: rem(30);
+                        @include flex(center, flex-start, rem(55));
+
+                        p {
+                            @include ftM;
+                            font-size: rem(16);
+                            color: $white;
+
+                            span {
+                                display: block;
+                                margin-top: rem(10);
+                                @include ftM;
+                                font-size: rem(16);
+                                color: $ft-sub-color2;
+                            }
+                        }
+                    }
+
+                    &.contact {
+                        margin-top: rem(30);
+
+                        >p {
+                            @include ftM;
+                            font-size: rem(16);
+                            color: $white;
+                        }
+
+                        >div {
+                            margin-top: rem(10);
+                            @include flex(flex-start, space-between);
+
+                            >div {
+                                @include flex(center, flex-start, rem(20));
+
+                                p {
+                                    @include ftR;
+                                    font-size: rem(14);
+                                    color: $ft-sub-color2;
+
+                                    a {
+                                        @include ftR;
+                                        font-size: rem(14);
+                                        color: $ft-sub-color2;
+                                    }
+                                }
+                            }
+
+                            .copyright {
+                                @include ftL;
+                                font-size: rem(15);
+                                color: $ft-sub-color2;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    .top_btn {
+        z-index: 11;
+        @include fixed($right: rem(30), $bottom: rem(30));
+        @include img_top;
+        width: rem(70);
+        height: rem(70);
+        font-size: 0;
+        border-radius: 50%;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out;
+
+        &.on {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}

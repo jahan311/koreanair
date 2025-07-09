@@ -1,0 +1,115 @@
+@charset 'utf-8';
+
+/* image */
+@mixin image($name, $path: "../images/", $format:"png", $bgXY:center, $bg:'') {
+    background: #{$bg} url("#{$path}#{$name}.#{$format}") no-repeat $bgXY;
+}
+
+@mixin img_logo {
+    @include image($name:'img_logo');
+    background-size: 100%;
+}
+
+@mixin img_logo_white {
+    @include image($name:'img_logo_white');
+    background-size: 100%;
+}
+
+@mixin img_top {
+    @include image($name:'img_top');
+    background-size: 100%;
+}
+
+@mixin img_main_txt {
+    @include image($name:'img_main_txt');
+    background-size: 100%;
+}
+
+@mixin img_main_object {
+    @include image($name:'img_main_object');
+    background-size: 100%;
+}
+
+@mixin img_sc01_bg {
+    @include image($name:'img_sc01_bg');
+    background-size: cover;
+}
+
+@mixin img_sc01_bg_mobile {
+    @include image($name:'img_sc01_bg_mobile');
+    background-size: cover;
+}
+
+@mixin img_check {
+    @include image($name:'img_check');
+    background-size: 100%;
+}
+
+@mixin img_checkbox {
+    @include image($name:'img_checkbox');
+    background-size: 100%;
+}
+
+@mixin img_checkbox_on {
+    @include image($name:'img_checkbox_on');
+    background-size: 100%;
+}
+
+@mixin img_sc01_ico1 {
+    @include image($name:'img_sc01_ico1');
+    background-size: 100%;
+}
+
+@mixin img_sc01_ico2 {
+    @include image($name:'img_sc01_ico2');
+    background-size: 100%;
+}
+
+@mixin img_sc01_ico3 {
+    @include image($name:'img_sc01_ico3');
+    background-size: 100%;
+}
+
+@mixin img_sc03_pc {
+    @include image($name:'img_sc03_pc', $bgXY: top center);
+    background-size: cover;
+}
+
+@mixin img_sc03_mo {
+    @include image($name:'img_sc03_mo', $bgXY: top center);
+    background-size: cover;
+}
+
+
+@mixin iconMask ($name, $color, $path: "../images/", $format:"svg") {
+    background-color: $color;
+    mask-image : url("#{$path}#{$name}.#{$format}");
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    font-size: 0;
+}
+
+@mixin ico_down($width, $height, $color: auto) {
+    @include iconMask($name:'ico_down', $color : $color );
+    width: $width;
+    height: $height;
+}
+
+@mixin ico_arrow_left($width, $height, $color: auto) {
+    @include iconMask($name:'ico_arrow_left', $color : $color );
+    width: $width;
+    height: $height;
+}
+
+@mixin ico_arrow_right($width, $height, $color: auto) {
+    @include iconMask($name:'ico_arrow_right', $color : $color );
+    width: $width;
+    height: $height;
+}
+
+@mixin ico_arrow_down($width, $height, $color: auto) {
+    @include iconMask($name:'ico_arrow_down', $color : $color );
+    width: $width;
+    height: $height;
+}

@@ -1,0 +1,1175 @@
+@charset 'utf-8';
+
+
+/* 노트북 & 테블릿 가로 (해상도 1024px ~ 1279px)*/
+@media all and (min-width: 961px) and (max-width:1279px) {
+    :root {
+        font-size: 62.5%;
+    }
+
+    .wrap {
+        .fullpage {
+            header {
+                padding: rem(30) rem(40);
+            }
+
+            .full_section {
+                .inner {
+                    max-width: 90%;
+                }
+
+                &.main {
+                    .inner {
+                        .txt {
+                            h5 {
+                                font-size: rem(70);
+                                line-height: 1.2;
+                                letter-spacing: rem(2);
+                            }
+
+                            p {
+                                line-height: 1.4;
+
+                                .mo_br {
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc01 {
+                    .inner {
+                        .service_box {
+                            .slider_track {
+
+                                .service_02 {
+                                    padding: rem(60) rem(20);
+
+                                    >ul {
+                                        @include flex(center, space-between);
+
+                                        .card {
+                                            width: 32%;
+                                            height: rem(440);
+
+                                            >span {
+                                                line-height: 1.2;
+                                                word-break: keep-all;
+                                                height: rem(36);
+                                            }
+
+                                            >p {
+                                                height: rem(72);
+                                            }
+
+                                            ul {
+                                                li {
+                                                    .txt {
+                                                        width: 100%;
+                                                        max-width: calc(100% - 20px) !important;
+                                                    }
+                                                }
+                                            }
+
+                                            &::before {
+                                                width: rem(80);
+                                                height: rem(80);
+                                                $right: rem(15);
+                                                $bottom: rem(15)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc02 {
+                    .inner {
+                        .tab_box {
+                            .tab {
+                                padding-right: rem(20);
+
+                                li {
+
+                                    .txt {
+                                        max-width: rem(380);
+                                        font-size: rem(18);
+
+                                        span {
+                                            font-size: rem(18);
+                                        }
+                                    }
+                                }
+                            }
+
+                            .tab_contents {
+                                max-width: 60%;
+                            }
+                        }
+                    }
+                }
+
+                &.sc03 {
+                    .inner {
+                        @include flex(flex-start, center, rem(20), column);
+                    }
+                }
+
+                &.sc04 {
+                    .inner {
+                        .contact_box {
+                            .left {
+                                max-width: 58%;
+
+                                .row {
+                                    .input_box {
+                                        width: calc(50% - rem(10));
+                                    }
+                                }
+                            }
+
+                            .right {
+                                max-width: 40%;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            footer {
+                .inner {
+                    max-width: 90%;
+                }
+            }
+        }
+    }
+}
+
+/* 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:960px) {
+    :root {
+        font-size: 52.5% !important;
+    }
+
+    .wrap {
+        .fullpage {
+            header {
+                padding: rem(30) rem(40);
+
+                nav {
+                    ul {
+                        gap: rem(25);
+                    }
+                }
+            }
+
+            .full_section {
+                .inner {
+                    max-width: 85%;
+                }
+
+                &.main {
+                    .inner {
+                        .txt {
+                            h5 {
+                                font-size: rem(70);
+                                line-height: 1.2;
+                                letter-spacing: rem(2);
+                            }
+
+                            p {
+                                line-height: 1.4;
+
+                                .mo_br {
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc01 {
+                    .inner {
+                        .desc {
+                            max-width: 80%;
+                        }
+
+                        .service_box {
+                            .slider_track {
+                                .service_01 {
+                                    padding: rem(60) rem(30);
+                                }
+
+                                .service_02 {
+                                    padding: rem(60) rem(20);
+
+                                    >ul {
+                                        @include flex(center, space-between);
+
+                                        .card {
+                                            width: 32%;
+                                            height: rem(440);
+
+                                            >span {
+                                                line-height: 1.2;
+                                                word-break: keep-all;
+                                                height: rem(36);
+                                            }
+
+                                            >p {
+                                                height: rem(72);
+                                            }
+
+                                            ul {
+                                                li {
+                                                    .txt {
+                                                        width: 100%;
+                                                        max-width: calc(100% - 20px) !important;
+                                                    }
+                                                }
+                                            }
+
+                                            &::before {
+                                                width: rem(80);
+                                                height: rem(80);
+                                                $right: rem(15);
+                                                $bottom: rem(15)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc02 {
+                    .inner {
+
+                        .tab_box {
+                            display: block;
+                            margin-top: rem(25);
+
+                            .tab {
+                                @include flex(center, center, rem(10));
+                                flex-wrap: wrap;
+
+                                li {
+                                    width: calc(50% - rem(5)) !important;
+                                    max-height: 1000px;
+                                    overflow: hidden;
+                                    transition: none;
+
+                                    .tab_tit {
+                                        width: 100%;
+                                        margin-bottom: 0;
+                                    }
+
+                                    .txt {
+                                        display: none;
+                                    }
+
+                                    &.active {
+                                        max-height: 1000px;
+
+                                        .tab_tit {
+                                            background: $point;
+                                        }
+
+                                        .txt {
+                                            display: none;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .tab_contents {
+                                margin-top: rem(60);
+                                width: 100%;
+                                max-width: 100%;
+
+                                li {
+                                    opacity: 0;
+                                    max-height: 0;
+                                    transition: opacity 0.3s ease;
+
+                                    img {
+                                        width: 100%;
+                                        height: 100%;
+                                        object-fit: contain;
+                                    }
+
+                                    &.show {
+                                        max-height: 1000px;
+                                    }
+
+                                    .txt {
+                                        font-size: rem(18);
+
+                                        span {
+                                            font-size: rem(18);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc03 {
+                    .inner {
+                        @include flex(flex-start, center, rem(20), column);
+
+                        .device {
+                            width: 100%;
+                            >div.pc {
+                                &::before {
+                                    width: rem(520);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc04 {
+                    .inner {
+                        padding-bottom: rem(60);
+                        .contact_box {
+                            margin-top: rem(40);
+                            display: block;
+
+                            .input_box {
+
+                                input {
+                                    margin-top: rem(15);
+
+                                }
+
+                                textarea {
+                                    margin-top: rem(15);
+                                    height: rem(230);
+                                    padding: rem(15);
+                                }
+                            }
+
+                            .select_box {
+                                position: relative;
+                                width: 100%;
+                                margin-top: rem(35);
+
+                                .custom_select {
+                                    button {
+                                        margin-top: rem(15);
+
+                                        &::after {
+                                            height: rem(14);
+                                            position: absolute;
+                                            transform: none;
+                                            top: auto;
+                                            bottom: rem(10);
+                                        }
+                                    }
+                                }
+                            }
+
+                            .left {
+                                width: 100%;
+                                max-width: 100%;
+
+                                .row {
+                                    margin-top: rem(35);
+                                    display: block;
+
+                                    .input_box {
+                                        width: 100%;
+
+                                        span {
+                                            @include absolute($right:0, $bottom:rem(10));
+                                        }
+
+                                        &+.input_box {
+                                            margin-top: rem(35);
+                                        }
+                                    }
+                                }
+                            }
+
+                            .right {
+                                margin-top: rem(35);
+                                width: 100%;
+                                max-width: 100%;
+
+                                .input_box {
+                                    .count {
+                                        font-size: rem(12);
+
+                                        span {
+                                            font-size: rem(12);
+                                        }
+                                    }
+                                }
+
+                                .checkbox {
+                                    margin: rem(15) auto 0;
+
+                                    input[type=checkbox] {
+                                        &+label {
+                                            font-size: rem(14);
+
+                                            &::before {
+                                                vertical-align: -5px;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .contact_btn {
+                                    height: rem(50);
+                                    border-radius: rem(25);
+
+                                    p {
+                                        font-size: rem(18);
+                                        letter-spacing: rem(-0.36);
+                                    }
+
+                                    &:hover {
+                                        &::after {
+                                            border-radius: rem(25);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            footer {
+                .inner {
+                    max-width: 90%;
+
+                    div {
+                        &.info {
+                            gap: rem(30);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* 모바일 가로 & 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width:480px) and (max-width:767px) {
+    :root {
+        font-size: 72.5% !important;
+    }
+}
+
+/* 모바일 세로 */
+@media all and (max-width:767px) {
+    :root {
+        font-size: 62.5%;
+    }
+
+    .wrap {
+        .mo_br {
+            display: block;
+        }
+
+        .fullpage {
+            header {
+                padding: rem(20);
+
+                .logo {
+                    a {
+                        width: rem(143);
+                        height: rem(25);
+                    }
+                }
+
+                nav {
+                    display: none;
+                }
+
+                .mo_nav_btn {
+                    @include flex(center, space-between, rem(5), column);
+                }
+            }
+
+            .full_section {
+                &.main {
+                    background: linear-gradient(165deg, #04d2fc 3%, #0d90fa 32%, #3778f2 85%);
+                    height: 100vh;
+
+                    &::before {
+                        @include centerX;
+                        width: 100%;
+                        max-width: 100%;
+                    }
+
+                    .inner {
+                        padding: 0 rem(30);
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+
+                        &::after {
+                            content: none;
+                        }
+
+                        .txt {
+                            width: 100%;
+
+                            h5 {
+                                font-size: rem(40);
+                                line-height: rem(45);
+                                letter-spacing: rem(2);
+                            }
+
+                            >p {
+                                margin-top: rem(10);
+                                font-size: rem(16);
+                                letter-spacing: rem(-0.32);
+                                line-height: rem(23);
+
+                                &::after {
+                                    margin-top: rem(37);
+                                    @include content;
+                                    @include img_main_object;
+                                    width: 100%;
+                                    max-width: 100%;
+                                    aspect-ratio: 700/446;
+                                }
+                            }
+
+                            .btn_box {
+                                margin: rem(20) auto 0;
+                                @include flex(center, center, rem(10), column);
+
+                                .go_contact_btn {
+                                    width: rem(250);
+                                    height: rem(50);
+                                    border-radius: rem(25);
+
+                                    &::after {
+                                        @include content;
+                                        width: 0;
+                                        height: 100%;
+                                        background-color: #0a275b;
+                                        position: absolute;
+                                        left: 50%;
+                                        top: 0;
+                                        transform: translate(-50%, 0);
+                                        transition: width 0.5s;
+                                    }
+
+                                    p {
+                                        font-size: rem(18);
+                                        letter-spacing: rem(-0.36);
+                                        line-height: rem(50);
+
+                                        &::after {
+                                            width: rem(10);
+                                            height: rem(10);
+                                        }
+                                    }
+
+                                    &:hover {
+                                        &::after {
+                                            border-radius: rem(25);
+                                        }
+                                    }
+                                }
+
+                                .down_btn {
+                                    width: rem(250);
+                                    height: rem(50);
+                                    border-radius: rem(25);
+
+                                    p {
+                                        font-size: rem(18);
+                                        letter-spacing: rem(-0.36);
+                                        line-height: rem(50);
+
+                                        &::after {
+                                            width: rem(10);
+                                            height: rem(10);
+                                        }
+                                    }
+
+                                    &:hover {
+                                        &::after {
+                                            border-radius: rem(25);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc01 {
+                    .inner {
+                        padding: rem(95) rem(20) rem(60);
+
+                        .tit {
+                            font-size: rem(35);
+                            line-height: rem(45);
+                            letter-spacing: rem(-0.7);
+
+                            strong {
+                                font-size: rem(35);
+                                line-height: rem(45);
+                                letter-spacing: rem(-0.7);
+                            }
+                        }
+
+                        .desc {
+                            margin-top: rem(10);
+                            font-size: rem(14);
+                            line-height: rem(20);
+                            letter-spacing: rem(-0.28);
+                        }
+
+                        .service_box {
+                            margin-top: rem(15);
+
+                            .control_btn {
+                                position: relative;
+                                top: auto;
+                                right: auto;
+                                justify-content: flex-start;
+
+                                button {
+                                    width: rem(55);
+                                    height: rem(55);
+
+                                    &.prev_btn {
+                                        &::before {
+                                            width: rem(18);
+                                            height: rem(14);
+                                        }
+                                    }
+
+                                    &.next_btn {
+                                        &::before {
+                                            width: rem(18);
+                                            height: rem(14);
+                                        }
+                                    }
+                                }
+                            }
+
+                            .slider_wrap {
+                                margin-top: rem(20);
+                            }
+
+                            .slider_track {
+                                .service_01 {
+                                    padding: rem(60) rem(20) rem(80);
+                                    border-radius: rem(20);
+                                    @include img_sc01_bg_mobile;
+
+                                    p {
+                                        font-size: rem(22);
+                                        letter-spacing: rem(-0.44);
+                                    }
+
+                                    ul {
+                                        margin-top: rem(25);
+
+                                        li {
+                                            font-size: rem(15);
+                                            letter-spacing: rem(-0.3);
+                                            line-height: rem(22);
+                                            margin-left: rem(24);
+                                            word-break: keep-all;
+
+                                            &+li {
+                                                margin-top: rem(20);
+                                            }
+                                        }
+                                    }
+
+                                    img {
+                                        margin-top: rem(30);
+                                        width: 100%;
+                                        object-fit: cover;
+                                    }
+                                }
+
+                                .service_02 {
+                                    border-radius: rem(20);
+                                    padding: 0;
+
+                                    >ul {
+                                        width: 100%;
+                                        padding: rem(20);
+                                        @include flex(center, center, rem(15), column);
+
+                                        .card {
+                                            padding: rem(20) rem(20) rem(86);
+                                            width: 100%;
+                                            height: auto;
+                                            aspect-ratio: 280/270;
+                                            border-radius: rem(15);
+
+                                            >span {
+                                                font-size: rem(13);
+                                                letter-spacing: rem(-0.26);
+                                            }
+
+                                            p {
+                                                font-size: rem(18);
+                                                line-height: 1;
+                                                letter-spacing: rem(-0.36);
+                                            }
+
+                                            ul {
+                                                margin-top: rem(18);
+
+                                                li {
+                                                    .txt {
+                                                        font-size: rem(13);
+                                                        line-height: rem(20);
+                                                        letter-spacing: rem(-0.26);
+                                                        max-width: rem(207);
+                                                    }
+                                                }
+                                            }
+
+                                            &::before {
+                                                width: rem(50);
+                                                height: rem(50);
+                                                bottom: rem(10);
+                                                right: rem(10);
+                                            }
+
+                                            &:nth-child(2) {
+                                                ul {
+                                                    li:first-child {
+                                                        .txt {
+                                                            max-width: rem(213);
+                                                        }
+                                                    }
+
+                                                    .txt {
+                                                        max-width: rem(213);
+                                                    }
+                                                }
+                                            }
+
+                                            &:last-child {
+                                                ul {
+                                                    li:first-child {
+                                                        .txt {
+                                                            max-width: rem(200);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc02 {
+                    .inner {
+                        padding: rem(95) rem(20) rem(60);
+
+                        .tit {
+                            font-size: rem(35);
+                            letter-spacing: rem(-0.7);
+                            line-height: 1;
+                        }
+
+                        .tab_box {
+                            display: block;
+                            margin-top: rem(25);
+
+                            .tab {
+                                @include flex(center, center, rem(10));
+                                flex-wrap: wrap;
+
+                                li {
+                                    width: calc(50% - rem(5)) !important;
+                                    max-height: 1000px;
+                                    overflow: hidden;
+                                    transition: none;
+
+                                    .tab_tit {
+                                        width: 100%;
+                                        height: rem(40);
+                                        line-height: rem(40);
+                                        border-radius: rem(20);
+                                        font-size: rem(15);
+                                        letter-spacing: rem(-0.3);
+                                        margin-bottom: 0;
+                                    }
+
+                                    .txt {
+                                        display: none;
+                                    }
+
+                                    &.active {
+                                        max-height: 1000px;
+
+                                        .tab_tit {
+                                            background: $point;
+                                        }
+
+                                        .txt {
+                                            display: none;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .tab_contents {
+                                margin-top: rem(20);
+                                width: 100%;
+                                max-width: 100%;
+
+                                li {
+                                    opacity: 0;
+                                    max-height: 0;
+                                    transition: opacity 0.3s ease;
+
+                                    img {
+                                        width: 100%;
+                                        height: 100%;
+                                        object-fit: contain;
+                                    }
+
+                                    &.show {
+                                        max-height: 1000px;
+                                    }
+
+                                    .txt {
+                                        display: block;
+                                        width: 100%;
+                                        @include ftR;
+                                        font-size: rem(15);
+                                        line-height: rem(22);
+                                        letter-spacing: rem(-0.3);
+                                        color: $ft-dark-gray;
+                                        word-break: keep-all;
+                                        margin-bottom: rem(30);
+
+                                        span {
+                                            @include ftR;
+                                            font-size: rem(15);
+                                            line-height: rem(22);
+                                            letter-spacing: rem(-0.3);
+                                            color: $point;
+                                            word-break: keep-all;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc03 {
+                    .inner {
+                        padding: rem(95) rem(20) rem(60);
+                        display: block;
+
+                        .txt {
+                            .tit {
+                                font-size: rem(35);
+                                line-height: rem(45);
+                                letter-spacing: rem(-0.7);
+                            }
+
+                            .desc {
+                                margin-top: rem(15);
+                                font-size: rem(16);
+                                line-height: rem(25);
+                                letter-spacing: rem(-0.32);
+                                max-width: rem(240);
+                            }
+                        }
+
+                        .device {
+                            display: block;
+
+                            >div {
+                                margin: rem(40) auto 0;
+                                text-align: center;
+
+                                .label {
+                                    font-size: rem(16);
+                                    letter-spacing: rem(-0.32);
+                                    width: rem(120);
+                                    padding: rem(5) 0;
+                                    border-radius: rem(15);
+                                }
+
+                                .txt {
+                                    margin-top: rem(10);
+                                    font-size: rem(16);
+                                    line-height: rem(22);
+                                    letter-spacing: rem(-0.32);
+                                }
+
+                                &.pc {
+                                    &::before {
+                                        width: 100%;
+                                        aspect-ratio: 627/421;
+                                        background-position: 5px top;
+                                    }
+                                }
+
+                                &.mo {
+                                    &::before {
+                                        width: rem(201);
+                                        aspect-ratio: 223/421;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.sc04 {
+                    .inner {
+                        padding: rem(95) rem(20) rem(60);
+
+                        .tit {
+                            font-size: rem(35);
+                            letter-spacing: rem(-0.7);
+                            line-height: 1;
+                        }
+
+                        .desc {
+                            margin-top: rem(10);
+                            font-size: rem(14);
+                            line-height: rem(20);
+                            letter-spacing: rem(-0.28);
+                        }
+
+                        .contact_box {
+                            margin-top: rem(40);
+                            display: block;
+
+                            .input_box {
+                                label {
+                                    font-size: rem(16);
+
+                                    &::before {
+                                        font-size: rem(16);
+                                    }
+                                }
+
+                                input {
+                                    margin-top: rem(15);
+                                    font-size: rem(14);
+
+                                    &::placeholder {
+                                        font-size: rem(14);
+                                    }
+
+                                }
+
+                                textarea {
+                                    margin-top: rem(15);
+                                    height: rem(230);
+                                    padding: rem(15);
+                                    font-size: rem(14);
+                                    line-height: rem(26);
+
+                                    &::placeholder {
+                                        font-size: rem(14);
+                                    }
+                                }
+                            }
+
+                            .select_box {
+                                position: relative;
+                                width: 100%;
+                                margin-top: rem(35);
+
+                                label {
+                                    font-size: rem(16);
+
+                                    &::before {
+                                        font-size: rem(16);
+                                    }
+                                }
+
+                                .custom_select {
+                                    button {
+                                        margin-top: rem(15);
+                                        font-size: rem(14);
+
+                                        &::after {
+                                            height: rem(14);
+                                            position: absolute;
+                                            transform: none;
+                                            top: auto;
+                                            bottom: rem(10);
+                                        }
+                                    }
+
+                                    ul {
+                                        li {
+                                            font-size: rem(14);
+                                        }
+                                    }
+                                }
+                            }
+
+                            .left {
+                                width: 100%;
+                                max-width: 100%;
+
+                                .row {
+                                    margin-top: rem(35);
+                                    display: block;
+
+                                    .input_box {
+                                        width: 100%;
+
+                                        span {
+                                            @include absolute($right:0, $bottom:rem(10));
+                                            font-size: rem(14);
+                                        }
+
+                                        &+.input_box {
+                                            margin-top: rem(35);
+                                        }
+                                    }
+                                }
+                            }
+
+                            .right {
+                                margin-top: rem(35);
+                                width: 100%;
+                                max-width: 100%;
+
+                                .input_box {
+                                    .count {
+                                        font-size: rem(12);
+
+                                        span {
+                                            font-size: rem(12);
+                                        }
+                                    }
+                                }
+
+                                .checkbox {
+                                    margin: rem(15) auto 0;
+
+                                    input[type=checkbox] {
+                                        &+label {
+                                            font-size: rem(14);
+
+                                            &::before {
+                                                vertical-align: -5px;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .contact_btn {
+                                    height: rem(50);
+                                    border-radius: rem(25);
+
+                                    p {
+                                        font-size: rem(18);
+                                        letter-spacing: rem(-0.36);
+                                    }
+
+                                    &:hover {
+                                        &::after {
+                                            border-radius: rem(25);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            footer {
+                .inner {
+                    padding: rem(30) rem(20);
+
+                    .company {
+                        font-size: rem(14);
+                    }
+
+                    div {
+                        &.info {
+                            margin-top: rem(20);
+                            gap: rem(30);
+                            flex-wrap: wrap;
+
+                            p {
+                                font-size: rem(14);
+
+                                span {
+                                    @include ftR;
+                                    font-size: rem(13);
+                                }
+                            }
+                        }
+
+                        &.contact {
+                            margin-top: rem(20);
+
+                            >p {
+                                font-size: rem(14);
+                            }
+
+                            >div {
+                                display: block;
+
+                                >div {
+                                    @include flex(flex-start, flex-start, rem(6), column);
+
+                                    p {
+                                        font-size: rem(13);
+
+                                        a {
+                                            font-size: rem(13);
+                                        }
+                                    }
+                                }
+
+                                .copyright {
+                                    margin-top: rem(30);
+                                    font-size: rem(13);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        .fullpage_nav {
+            display: none !important;
+        }
+
+        .top_btn {
+            width: rem(40);
+            height: rem(40);
+            right: rem(10);
+        }
+    }
+}
