@@ -1695,7 +1695,23 @@ body {
   font-family: "Pretendard", sans-serif;
   font-weight: 500;
   font-size: 1.6rem;
-  color: #9e9e9e;
+  color: #9e9e9e !important;
+}
+.wrap .fullpage footer .inner div.info p span a {
+  display: block;
+  margin-top: 1rem;
+  font-family: "Pretendard", sans-serif;
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: #9e9e9e !important;
+}
+.wrap .fullpage footer .inner div.info p a {
+  display: block;
+  margin-top: 1rem;
+  font-family: "Pretendard", sans-serif;
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: #9e9e9e !important;
 }
 .wrap .fullpage footer .inner div.contact {
   margin-top: 3rem;
@@ -2290,7 +2306,7 @@ body {
     border-radius: 2.5rem;
   }
   .wrap .fullpage .full_section.sc01 .inner {
-    padding: 9.5rem 2rem 0;
+    padding: 9.5rem 2rem 6rem;
   }
   .wrap .fullpage .full_section.sc01 .inner .tit {
     font-size: 3.5rem;
@@ -2310,7 +2326,6 @@ body {
   }
   .wrap .fullpage .full_section.sc01 .inner .service_box {
     margin-top: 1.5rem;
-    margin-bottom: 6rem;
   }
   .wrap .fullpage .full_section.sc01 .inner .service_box .control_btn {
     position: relative;
@@ -2427,7 +2442,7 @@ body {
     max-width: 20rem;
   }
   .wrap .fullpage .full_section.sc02 .inner {
-    padding: 9.5rem 2rem 0;
+    padding: 9.5rem 2rem 6rem;
   }
   .wrap .fullpage .full_section.sc02 .inner .tit {
     font-size: 3.5rem;
@@ -2437,7 +2452,6 @@ body {
   .wrap .fullpage .full_section.sc02 .inner .tab_box {
     display: block;
     margin-top: 2.5rem;
-    margin-bottom: 6rem;
   }
   .wrap .fullpage .full_section.sc02 .inner .tab_box .tab {
     display: -webkit-box;
@@ -2527,7 +2541,7 @@ body {
     word-break: keep-all;
   }
   .wrap .fullpage .full_section.sc03 .inner {
-    padding: 9.5rem 2rem 0;
+    padding: 9.5rem 2rem 6rem;
     display: block;
   }
   .wrap .fullpage .full_section.sc03 .inner .txt .tit {
@@ -2544,7 +2558,6 @@ body {
   }
   .wrap .fullpage .full_section.sc03 .inner .device {
     display: block;
-    margin-bottom: 6rem;
   }
   .wrap .fullpage .full_section.sc03 .inner .device > div {
     margin: 4rem auto 0;
@@ -2573,7 +2586,7 @@ body {
     aspect-ratio: 223/421;
   }
   .wrap .fullpage .full_section.sc04 .inner {
-    padding: 9.5rem 2rem 0;
+    padding: 9.5rem 2rem 6rem;
   }
   .wrap .fullpage .full_section.sc04 .inner .tit {
     font-size: 3.5rem;
@@ -2589,7 +2602,6 @@ body {
   .wrap .fullpage .full_section.sc04 .inner .contact_box {
     margin-top: 4rem;
     display: block;
-    margin-bottom: 6rem;
   }
   .wrap .fullpage .full_section.sc04 .inner .contact_box .input_box label {
     font-size: 1.6rem;
