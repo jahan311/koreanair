@@ -381,7 +381,8 @@
                 background: $white;
 
                 .inner {
-                    padding: rem(150) 0 0;
+                    padding: 0;
+                    @include flex(flex-start, center, 0, column);
 
                     .tit {
                         @include ftB;
@@ -614,6 +615,7 @@
 
             &.sc02 {
                 background: #fafafc;
+
                 .inner {
                     padding: rem(150) 0 0;
 
@@ -628,6 +630,7 @@
                     .tab_box {
                         @include flex(center, space-between);
                         margin-top: rem(90);
+                        overflow: hidden;
 
                         .tab {
                             li {
@@ -1149,9 +1152,26 @@
                             span {
                                 display: block;
                                 margin-top: rem(10);
+                                @include ftR;
+                                font-size: rem(14);
+                                color: $ft-sub-color2 !important;
+
+                                a {
+                                    display: block;
+                                    margin-top: rem(10);
+                                    @include ftR;
+                                    font-size: rem(14);
+                                    color: $ft-sub-color2 !important;
+                                    pointer-events: none;
+                                }
+                            }
+
+                            a {
+                                display: block;
+                                margin-top: rem(10);
                                 @include ftM;
-                                font-size: rem(16);
-                                color: $ft-sub-color2;
+                                font-size: rem(14);
+                                color: $ft-sub-color2 !important;
                             }
                         }
                     }

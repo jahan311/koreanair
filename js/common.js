@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let scrollY = 0;
 
     // === 모바일 내비게이션 토글 ===
-    moNavBtn?.addEventListener('click', () => {
+    moNavBtn ?.addEventListener('click', () => {
         const isMenuOpening = moNav.classList.contains('hide');
         if (isMenuOpening) {
             scrollY = window.scrollY;
@@ -64,11 +64,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (index !== -1) {
                 const targetY = target.offsetTop;
                 window.isAnimating = true;
-                document.querySelector('.header')?.classList.remove('white');
-                document.querySelector('.fullpage_nav')?.classList.remove('white');
+                document.querySelector('.header') ?.classList.remove('white');
+                document.querySelector('.fullpage_nav') ?.classList.remove('white');
                 window.smoothScrollTo(targetY, 1000);
                 window.currentIndex = index;
-                window.updateNav?.();
+                window.updateNav ?.();
             }
         });
     }
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        textarea?.addEventListener('input', () => {
+        textarea ?.addEventListener('input', () => {
             counter.textContent = textarea.value.length;
         });
     }
@@ -125,6 +125,17 @@ function initSlider() {
     currentSlideIndex = 1;
 
     function moveTo(index) {
+        const track = document.querySelector(".slider_track");
+        const total = track.children.length;
+
+        if (index >= total) {
+            index = total - 1;
+        }
+
+        if (index < 0) {
+            index = 0;
+        }
+
         track.style.transition = "transform 0.6s ease-in-out";
         track.style.transform = `translateX(-${index * 100}%)`;
         currentSlideIndex = index;

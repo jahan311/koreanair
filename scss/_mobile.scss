@@ -194,6 +194,8 @@
 
                 &.sc01 {
                     .inner {
+                        display: block;
+                        padding: rem(150) 0 0;
                         .desc {
                             max-width: 80%;
                         }
@@ -326,6 +328,7 @@
 
                         .device {
                             width: 100%;
+
                             >div.pc {
                                 &::before {
                                     width: rem(520);
@@ -338,6 +341,7 @@
                 &.sc04 {
                     .inner {
                         padding-bottom: rem(60);
+
                         .contact_box {
                             margin-top: rem(40);
                             display: block;
@@ -617,6 +621,7 @@
 
                 &.sc01 {
                     .inner {
+                        display: block;
                         padding: rem(95) rem(20) rem(60);
 
                         .tit {
@@ -1123,7 +1128,15 @@
 
                                 span {
                                     @include ftR;
-                                    font-size: rem(13);
+                                    font-size: rem(13) !important;
+
+                                    a {
+                                        font-size: rem(13) !important;
+                                    }
+                                }
+
+                                a {
+                                    font-size: rem(13) !important;
                                 }
                             }
                         }
