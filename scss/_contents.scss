@@ -19,6 +19,7 @@
             width: 100%;
             padding: rem(30) rem(50) rem(30) rem(70);
             @include flex(center, space-between);
+            background: $white;
 
             .logo {
                 a {
@@ -184,6 +185,58 @@
             }
 
             &.white {
+                background: $point;
+                .logo {
+                    a {
+                        @include img_logo_white;
+                    }
+                }
+
+                nav {
+                    ul {
+                        li {
+                            &:not(.login_btn) {
+                                color: $white;
+
+                                &.on {
+                                    color: $white;
+                                    border-bottom: 2px solid $white;
+                                }
+
+                                &:hover {
+                                    color: $white;
+                                    border-bottom: 2px solid $white;
+                                }
+
+                            }
+
+                            &.login_btn {
+                                a {
+                                    border: 1px solid $white;
+
+                                    p {
+                                        color: $white;
+                                    }
+
+                                    &::after {
+                                        background-color: $white;
+                                        opacity: 0.1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .mo_nav_btn {
+                    .line {
+                        background: $white;
+                    }
+                }
+            }
+
+            &.main {
+                background: transparent;
                 .logo {
                     a {
                         @include img_logo_white;

@@ -1,14 +1,18 @@
 function setViewportHeight() {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-    document.querySelectorAll('.full_section:not(.short)').forEach(el => {
-        el.style.height = `${vh * 100}px`;
-    });
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
-
 setViewportHeight();
-window.addEventListener('resize', setViewportHeight);
+
+['resize', 'orientationchange', 'load'].forEach(event => {
+  window.addEventListener(event, () => {
+    setTimeout(setViewportHeight, 100);
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  setViewportHeight(); 
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     window.isSlideInitialized = false;
@@ -40,21 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
         topBtn.classList.toggle('on', !isHidden);
     };
 
-    const updateNav = () => {
-        const currentSection = scrollSections[currentIndex];
-        const navIndex = navTargetSections.indexOf(currentSection);
+        const updateNav = () => {
+            const currentSection = scrollSections[currentIndex];
+            const navIndex = navTargetSections.indexOf(currentSection);
 
-        fullpageNav.style.display = currentSection.classList.contains('main') ? 'none' : 'block';
+            fullpageNav.style.display = currentSection.classList.contains('main') ? 'none' : 'block';
 
-        const whiteSections = ['main', 'sc03'];
-        const isWhite = whiteSections.some(cls => currentSection.classList.contains(cls));
-        header.classList.toggle('white', isWhite);
-        fullpageNav.classList.toggle('white', isWhite);
+            // ✅ header className 정확하게 세팅
+            if (currentSection.classList.contains('main')) {
+                header.className = 'header main';
+            } else if (currentSection.classList.contains('sc03')) {
+                header.className = 'header white';
+            } else {
+                header.className = 'header';
+            }
 
-        navItems.forEach((li, i) => li.classList.toggle('on', i === navIndex));
-        headerNavItems.forEach((li, i) => li.classList.toggle('on', i === navIndex));
+            // fullpageNav 색상도 sc03일 때만 white
+            fullpageNav.classList.toggle('white', currentSection.classList.contains('sc03'));
 
-        updateTopButton();
+            navItems.forEach((li, i) => li.classList.toggle('on', i === navIndex));
+            headerNavItems.forEach((li, i) => li.classList.toggle('on', i === navIndex));
+
+            updateTopButton();
     };
 
     // === 부드러운 스크롤 함수

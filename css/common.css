@@ -389,6 +389,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  background: #ffffff;
 }
 .wrap .fullpage header .logo a {
   display: block;
@@ -550,6 +551,9 @@ body {
 .wrap .fullpage header .mo_nav ul li + li {
   margin-top: 5rem;
 }
+.wrap .fullpage header.white {
+  background: #1f86f7;
+}
 .wrap .fullpage header.white .logo a {
   background: url("../images/img_logo_white.png") no-repeat center;
   background-size: 100%;
@@ -576,6 +580,37 @@ body {
   opacity: 0.1;
 }
 .wrap .fullpage header.white .mo_nav_btn .line {
+  background: #ffffff;
+}
+.wrap .fullpage header.main {
+  background: transparent;
+}
+.wrap .fullpage header.main .logo a {
+  background: url("../images/img_logo_white.png") no-repeat center;
+  background-size: 100%;
+}
+.wrap .fullpage header.main nav ul li:not(.login_btn) {
+  color: #ffffff;
+}
+.wrap .fullpage header.main nav ul li:not(.login_btn).on {
+  color: #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+.wrap .fullpage header.main nav ul li:not(.login_btn):hover {
+  color: #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+.wrap .fullpage header.main nav ul li.login_btn a {
+  border: 1px solid #ffffff;
+}
+.wrap .fullpage header.main nav ul li.login_btn a p {
+  color: #ffffff;
+}
+.wrap .fullpage header.main nav ul li.login_btn a::after {
+  background-color: #ffffff;
+  opacity: 0.1;
+}
+.wrap .fullpage header.main .mo_nav_btn .line {
   background: #ffffff;
 }
 .wrap .fullpage .full_section {
