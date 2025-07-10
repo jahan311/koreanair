@@ -1134,6 +1134,7 @@ body {
           flex-direction: row;
   margin-top: 9rem;
   overflow: hidden;
+  width: 100%;
 }
 .wrap .fullpage .full_section.sc02 .inner .tab_box .tab li {
   max-height: 9.4rem;
