@@ -1,8 +1,22 @@
 @charset 'utf-8';
 
 
+@media screen and (min-width: 961px) and (max-height: 918px) {
+    .wrap {
+        .fullpage {
+            .full_section:not(.main):not(.footer) {
+
+                .inner {
+                    display: block !important;
+                    padding: 150px 0 !important;
+                }
+            }
+        }
+    }
+}
+
 /* 노트북 & 테블릿 가로 (해상도 1024px ~ 1279px)*/
-@media all and (min-width: 961px) and (max-width:1279px) {
+@media screen and (min-width: 961px) and (max-width:1279px) {
     :root {
         font-size: 62.5%;
     }
@@ -150,7 +164,7 @@
 }
 
 /* 테블릿 가로 (해상도 768px ~ 1023px)*/
-@media all and (min-width:768px) and (max-width:960px) {
+@media screen and (min-width:768px) and (max-width:960px) {
     :root {
         font-size: 52.5% !important;
     }
@@ -196,6 +210,7 @@
                     .inner {
                         display: block;
                         padding: rem(150) 0 0;
+
                         .desc {
                             max-width: 80%;
                         }
@@ -251,6 +266,8 @@
 
                 &.sc02 {
                     .inner {
+                        display: block;
+                        padding: rem(150) 0 0;
 
                         .tab_box {
                             display: block;
@@ -468,16 +485,15 @@
     }
 }
 
-
 /* 모바일 가로 & 테블릿 세로 (해상도 480px ~ 767px)*/
-@media all and (min-width:480px) and (max-width:767px) {
+@media screen and (min-width:480px) and (max-width:767px) {
     :root {
         font-size: 72.5% !important;
     }
 }
 
 /* 모바일 세로 */
-@media all and (max-width:767px) {
+@media screen and (max-width:767px) {
     :root {
         font-size: 62.5%;
     }
@@ -790,6 +806,7 @@
 
                 &.sc02 {
                     .inner {
+                        display: block;
                         padding: rem(95) rem(20) rem(60);
 
                         .tit {

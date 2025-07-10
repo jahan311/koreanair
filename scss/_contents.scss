@@ -617,7 +617,8 @@
                 background: #fafafc;
 
                 .inner {
-                    padding: rem(150) 0 0;
+                    padding: 0;
+                    @include flex(flex-start, center, 0, column);
 
                     .tit {
                         @include ftB;
