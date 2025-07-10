@@ -163,7 +163,7 @@ function startSlider() {
         currentSlideIndex += 1;
         track.style.transition = "transform 0.6s ease-in-out";
         track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-    }, 3000);
+    }, 5000);
 }
 
 function stopSlider() {
