@@ -1855,6 +1855,12 @@ body {
   visibility: visible;
 }
 
+@media screen and (min-width: 961px) and (min-height: 919px) and (max-height: 940px) {
+  .wrap .fullpage .full_section:not(.main):not(.footer) .inner {
+    display: block !important;
+    padding: 100px 0 50px !important;
+  }
+}
 @media screen and (min-width: 961px) and (max-height: 918px) {
   .wrap .fullpage .full_section:not(.main):not(.footer) .inner {
     display: block !important;
