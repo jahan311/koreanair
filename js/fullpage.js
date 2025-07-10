@@ -183,69 +183,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('touchmove', (e) => {
-        if (!isTouching || window.isFullpageLocked) return;
+    if (!isTouching || window.isFullpageLocked) return;
 
-        const currentY = e.touches[0].clientY;
-        const deltaY = lastTouchY - currentY;
-        lastTouchY = currentY;
+    const currentY = e.touches[0].clientY;
+    const deltaY = lastTouchY - currentY;
+    lastTouchY = currentY;
 
-        const currentSection = scrollSections[currentIndex];
-        const inner = currentSection.querySelector('.inner');
-        if (!inner) return;
+    const currentSection = scrollSections[currentIndex];
+    const inner = currentSection.querySelector('.inner');
+    if (!inner) return;
 
-        const scrollTop = inner.scrollTop;
-        const scrollHeight = inner.scrollHeight;
-        const clientHeight = inner.clientHeight;
+    const scrollTop = inner.scrollTop;
+    const scrollHeight = inner.scrollHeight;
+    const clientHeight = inner.clientHeight;
 
-        const isScrollable = scrollHeight > clientHeight;
-        const isAtTop = scrollTop <= 0;
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    const isScrollable = scrollHeight > clientHeight;
+    const isAtTop = scrollTop <= 0;
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
-        if (!isScrollable) {
-            if (deltaY > 0) {
-                handleScroll('down');
-            } else if (deltaY < 0) {
-                handleScroll('up');
-            }
+    if (!isScrollable) {
+        handleScroll(deltaY > 0 ? 'down' : 'up');
+        isTouching = false;
+        return;
+    }
+
+    // 수동 스크롤
+    inner.scrollTop += deltaY;
+
+    // 다시 확인
+    const newScrollTop = inner.scrollTop;
+    const newIsAtTop = newScrollTop <= 0;
+    const newIsAtBottom = newScrollTop + clientHeight >= scrollHeight - 1;
+
+    if (deltaY > 0 && newIsAtBottom) {
+        if (readyToScrollDown && reachedBottomOnce) {
+            handleScroll('down');
             isTouching = false;
-            return;
-        }
-
-        // 수동 스크롤
-        inner.scrollTop += deltaY;
-
-        const newScrollTop = inner.scrollTop;
-        const newIsAtTop = newScrollTop <= 0;
-        const newIsAtBottom = newScrollTop + clientHeight >= scrollHeight - 1;
-
-        if (deltaY > 0 && newIsAtBottom) {
-            if (readyToScrollDown) {
-                handleScroll('down');
-                isTouching = false;
-                readyToScrollDown = false;
-            } else {
-                readyToScrollDown = true;
-                readyToScrollUp = false;
-            }
-        } else if (deltaY < 0 && newIsAtTop) {
-            if (readyToScrollUp) {
-                handleScroll('up');
-                isTouching = false;
-                readyToScrollUp = false;
-            } else {
-                readyToScrollUp = true;
-                readyToScrollDown = false;
-            }
-        } else {
-            readyToScrollUp = false;
             readyToScrollDown = false;
+            reachedBottomOnce = false;
+        } else {
+            readyToScrollDown = true;
         }
-    });
+    } else if (deltaY < 0 && newIsAtTop) {
+        if (readyToScrollUp && reachedTopOnce) {
+            handleScroll('up');
+            isTouching = false;
+            readyToScrollUp = false;
+            reachedTopOnce = false;
+        } else {
+            readyToScrollUp = true;
+        }
+    }
+});
 
     window.addEventListener('touchend', () => {
         isTouching = false;
-        readyToScrollUp = false;
-        readyToScrollDown = false;
+
+        // 이제 '끝에 도달했을 경우만' 진짜 다음에 넘어갈 수 있게
+        if (readyToScrollUp) reachedTopOnce = true;
+        if (readyToScrollDown) reachedBottomOnce = true;
     });
 
     // Top 버튼
