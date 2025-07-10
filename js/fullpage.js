@@ -160,89 +160,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 
     // Touch
-    let startY = 0;
+    let touchStartY = 0;
+    let lastTouchY = 0;
+    let isTouching = false;
 
-window.addEventListener('touchstart', (e) => {
-    startY = e.touches[0].clientY;
-});
+    window.addEventListener('touchstart', (e) => {
+        if (window.isFullpageLocked) return;
 
-window.addEventListener('touchend', (e) => {
-    if (window.isFullpageLocked) return;
+        touchStartY = e.touches[0].clientY;
+        lastTouchY = touchStartY;
+        isTouching = true;
+    });
 
-    const endY = e.changedTouches[0].clientY;
-    const delta = endY - startY;
+    window.addEventListener('touchmove', (e) => {
+        if (!isTouching || window.isFullpageLocked) return;
 
-    if (Math.abs(delta) < 30) return;
+        const currentY = e.touches[0].clientY;
+        const deltaY = lastTouchY - currentY; // +면 위로, -면 아래로
+        lastTouchY = currentY;
 
-    const direction = delta > 0 ? 'up' : 'down';
-    const currentSection = scrollSections[currentIndex];
-    const inner = currentSection.querySelector('.inner');
+        const currentSection = scrollSections[currentIndex];
+        const inner = currentSection.querySelector('.inner');
 
-    let allowSectionScroll = true;
+        if (!inner) return;
 
-    if (inner) {
-        const scrollTop = inner.scrollTop;
-        const scrollHeight = inner.scrollHeight;
-        const clientHeight = inner.clientHeight;
-
-        const isAtTop = scrollTop === 0;
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-
-        if (direction === 'up' && !isAtTop) {
-            allowSectionScroll = false; // 위로 갈 수 있음 → inner 먼저
-        }
-
-        if (direction === 'down' && !isAtBottom) {
-            allowSectionScroll = false; // 아래로 갈 수 있음 → inner 먼저
-        }
-    }
-
-    if (allowSectionScroll) {
-        if (direction === 'up') handleScroll('up');
-        else handleScroll('down');
-    }
-});
-
-window.addEventListener('touchend', (e) => {
-    if (window.isFullpageLocked) return;
-
-    const endY = e.changedTouches[0].clientY;
-    const delta = endY - startY;
-
-    if (Math.abs(delta) < 30) return;
-
-    const direction = delta > 0 ? 'up' : 'down';
-
-    const inner = document.querySelectorAll('.inner')[currentIndex];
-
-    let allowSectionScroll = true;
-
-    if (inner) {
         const scrollTop = inner.scrollTop;
         const scrollHeight = inner.scrollHeight;
         const clientHeight = inner.clientHeight;
 
         const isScrollable = scrollHeight > clientHeight;
-        const isAtTop = scrollTop === 0;
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
-        if (isScrollable) {
-            if (direction === 'up' && !isAtTop) {
-                allowSectionScroll = false;
-            } else if (direction === 'down' && !isAtBottom) {
-                allowSectionScroll = false;
-            } else if (didMove) {
-                // 실제 scrollable 상태에서 스크롤 발생했으면 → inner에 맡김
-                allowSectionScroll = false;
-            }
+        if (!isScrollable) {
+            // 스크롤이 안 된다면 바로 섹션 이동
+            if (deltaY > 0) handleScroll('down');
+            else if (deltaY < 0) handleScroll('up');
+            return;
         }
-    }
 
-    if (allowSectionScroll) {
-        if (direction === 'up') handleScroll('up');
-        else if (direction === 'down') handleScroll('down');
-    }
-});
+        // 수동 스크롤 적용
+        inner.scrollTop += deltaY;
+
+        const newScrollTop = inner.scrollTop;
+        const isAtTop = newScrollTop <= 0;
+        const isAtBottom = newScrollTop + clientHeight >= scrollHeight - 1;
+
+        // 끝에 도달했을 경우 → 섹션 이동
+        if (deltaY > 0 && isAtBottom) {
+            handleScroll('down');
+            isTouching = false;
+        } else if (deltaY < 0 && isAtTop) {
+            handleScroll('up');
+            isTouching = false;
+        }
+    });
+
+    window.addEventListener('touchend', () => {
+        isTouching = false;
+    });
 
     // Top 버튼
     topBtn.addEventListener('click', () => {

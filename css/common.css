@@ -270,12 +270,8 @@ body {
   max-height: calc(var(--vh) * 100);
   max-width: 140rem;
   margin: 0 auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  -ms-scroll-chaining: none;
-      overscroll-behavior: contain;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: auto;
 }
 .wrap .fullpage .full_section .inner::-webkit-scrollbar {
   display: none;
@@ -1694,7 +1690,7 @@ body {
   margin-top: 1rem;
   font-family: "Pretendard", sans-serif;
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.6rem !important;
   color: #9e9e9e !important;
 }
 .wrap .fullpage footer .inner div.info p span a {
@@ -1702,15 +1698,16 @@ body {
   margin-top: 1rem;
   font-family: "Pretendard", sans-serif;
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.6rem !important;
   color: #9e9e9e !important;
+  pointer-events: none;
 }
 .wrap .fullpage footer .inner div.info p a {
   display: block;
   margin-top: 1rem;
   font-family: "Pretendard", sans-serif;
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.6rem !important;
   color: #9e9e9e !important;
 }
 .wrap .fullpage footer .inner div.contact {
