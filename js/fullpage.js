@@ -195,6 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let isTouching = false;
     let readyToScrollUp = false;
     let readyToScrollDown = false;
+    let reachedTopOnce = false;
+    let reachedBottomOnce = false;
 
     window.addEventListener('touchstart', (e) => {
         if (window.isFullpageLocked) return;
