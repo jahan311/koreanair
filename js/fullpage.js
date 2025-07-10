@@ -161,16 +161,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Touch
     let startY = 0;
-    let didMove = false;
 
-    window.addEventListener('touchstart', (e) => {
-        startY = e.touches[0].clientY;
-        didMove = false;
-    });
+window.addEventListener('touchstart', (e) => {
+    startY = e.touches[0].clientY;
+});
 
-    window.addEventListener('touchmove', (e) => {
-        didMove = true;
-    });
+window.addEventListener('touchend', (e) => {
+    if (window.isFullpageLocked) return;
+
+    const endY = e.changedTouches[0].clientY;
+    const delta = endY - startY;
+
+    if (Math.abs(delta) < 30) return;
+
+    const direction = delta > 0 ? 'up' : 'down';
+    const currentSection = scrollSections[currentIndex];
+    const inner = currentSection.querySelector('.inner');
+
+    let allowSectionScroll = true;
+
+    if (inner) {
+        const scrollTop = inner.scrollTop;
+        const scrollHeight = inner.scrollHeight;
+        const clientHeight = inner.clientHeight;
+
+        const isAtTop = scrollTop === 0;
+        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+        if (direction === 'up' && !isAtTop) {
+            allowSectionScroll = false; // 위로 갈 수 있음 → inner 먼저
+        }
+
+        if (direction === 'down' && !isAtBottom) {
+            allowSectionScroll = false; // 아래로 갈 수 있음 → inner 먼저
+        }
+    }
+
+    if (allowSectionScroll) {
+        if (direction === 'up') handleScroll('up');
+        else handleScroll('down');
+    }
+});
 
 window.addEventListener('touchend', (e) => {
     if (window.isFullpageLocked) return;
