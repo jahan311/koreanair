@@ -82,56 +82,55 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.scrollToIndex = (index) => {
-    if (index < 0 || index > maxIndex) return;
-    isAnimating = true;
+        if (index < 0 || index > maxIndex) return;
+        isAnimating = true;
 
-    const target = scrollSections[index];
-    const isLeavingFooter = scrollSections[currentIndex]?.tagName === 'FOOTER';
+        const target = scrollSections[index];
+        const isLeavingFooter = scrollSections[currentIndex]?.tagName === 'FOOTER';
 
-    if (isLeavingFooter && index < currentIndex) {
-        justLeftFooter = true;
-        setTimeout(() => { justLeftFooter = false; }, 500);
-    }
+        if (isLeavingFooter && index < currentIndex) {
+            justLeftFooter = true;
+            setTimeout(() => {
+                justLeftFooter = false;
+            }, 500);
+        }
 
-    const targetY = target.offsetTop;
-    const isFooter = target.tagName === 'FOOTER';
-    smoothScrollTo(targetY, isFooter ? 1400 : 1000);
+        const targetY = target.offsetTop;
+        const isFooter = target.tagName === 'FOOTER';
+        smoothScrollTo(targetY, isFooter ? 1400 : 1000);
 
-    currentIndex = index;
-    updateNav();
+        currentIndex = index;
+        updateNav();
 
-    if (target.classList.contains('sc01')) {
-        initSlider();
-        startSlider();
-    } else {
-        stopSlider();
-    }
+        if (target.classList.contains('sc01')) {
+            initSlider();
+            startSlider();
+        } else {
+            stopSlider();
+        }
 
-    if (target.classList.contains('sc02')) {
-        initTabSlider();
-        startTabSlider();
-    } else {
-        stopTabSlider();
-    }
-};
+        if (target.classList.contains('sc02')) {
+            initTabSlider();
+            startTabSlider();
+        } else {
+            stopTabSlider();
+        }
+    };
 
     const handleScroll = (direction) => {
-    if (isAnimating) return;
+        if (isAnimating) return;
 
-    const nextIndex =
-        direction === 'down' && currentIndex < maxIndex
-            ? currentIndex + 1
-            : direction === 'up' && currentIndex > 0
-            ? currentIndex - 1
-            : null;
+        const nextIndex =
+            direction === 'down' && currentIndex < maxIndex ?
+            currentIndex + 1 :
+            direction === 'up' && currentIndex > 0 ?
+            currentIndex - 1 :
+            null;
 
-    if (nextIndex !== null) {
-        // 💥 현재 섹션의 inner 스크롤 초기화
-        const currentSection = scrollSections[currentIndex];
-
-        scrollToIndex(nextIndex);
-    }
-};
+        if (nextIndex !== null) {
+            scrollToIndex(nextIndex);
+        }
+    };
 
     // Wheel
     window.addEventListener('wheel', (e) => {
@@ -172,6 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let touchStartY = 0;
     let lastTouchY = 0;
     let isTouching = false;
+    let readyToScrollUp = false;
+    let readyToScrollDown = false;
 
     window.addEventListener('touchstart', (e) => {
         if (window.isFullpageLocked) return;
@@ -182,52 +183,69 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('touchmove', (e) => {
-    if (!isTouching || window.isFullpageLocked) return;
+        if (!isTouching || window.isFullpageLocked) return;
 
-    const currentY = e.touches[0].clientY;
-    const deltaY = lastTouchY - currentY;
-    lastTouchY = currentY;
+        const currentY = e.touches[0].clientY;
+        const deltaY = lastTouchY - currentY;
+        lastTouchY = currentY;
 
-    const currentSection = scrollSections[currentIndex];
-    const inner = currentSection.querySelector('.inner');
-    if (!inner) return;
+        const currentSection = scrollSections[currentIndex];
+        const inner = currentSection.querySelector('.inner');
+        if (!inner) return;
 
-    const scrollTop = inner.scrollTop;
-    const scrollHeight = inner.scrollHeight;
-    const clientHeight = inner.clientHeight;
+        const scrollTop = inner.scrollTop;
+        const scrollHeight = inner.scrollHeight;
+        const clientHeight = inner.clientHeight;
 
-    const isScrollable = scrollHeight > clientHeight;
-    const isAtTop = scrollTop <= 0;
-    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+        const isScrollable = scrollHeight > clientHeight;
+        const isAtTop = scrollTop <= 0;
+        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
-    if (!isScrollable) {
-        if (deltaY > 0) {
-            handleScroll('down');
-        } else if (deltaY < 0) {
-            handleScroll('up');
+        if (!isScrollable) {
+            if (deltaY > 0) {
+                handleScroll('down');
+            } else if (deltaY < 0) {
+                handleScroll('up');
+            }
+            isTouching = false;
+            return;
         }
-        isTouching = false; // 💥 여기 추가: 전환된 후 더 이상 터치 처리 금지
-        return;
-    }
 
-    // 수동 스크롤
-    inner.scrollTop += deltaY;
+        // 수동 스크롤
+        inner.scrollTop += deltaY;
 
-    const newScrollTop = inner.scrollTop;
-    const newIsAtTop = newScrollTop <= 0;
-    const newIsAtBottom = newScrollTop + clientHeight >= scrollHeight - 1;
+        const newScrollTop = inner.scrollTop;
+        const newIsAtTop = newScrollTop <= 0;
+        const newIsAtBottom = newScrollTop + clientHeight >= scrollHeight - 1;
 
-    if (deltaY > 0 && newIsAtBottom) {
-        handleScroll('down');
-        isTouching = false; // 💥 전환 후 중단
-    } else if (deltaY < 0 && newIsAtTop) {
-        handleScroll('up');
-        isTouching = false; // 💥 전환 후 중단
-    }
-});
+        if (deltaY > 0 && newIsAtBottom) {
+            if (readyToScrollDown) {
+                handleScroll('down');
+                isTouching = false;
+                readyToScrollDown = false;
+            } else {
+                readyToScrollDown = true;
+                readyToScrollUp = false;
+            }
+        } else if (deltaY < 0 && newIsAtTop) {
+            if (readyToScrollUp) {
+                handleScroll('up');
+                isTouching = false;
+                readyToScrollUp = false;
+            } else {
+                readyToScrollUp = true;
+                readyToScrollDown = false;
+            }
+        } else {
+            readyToScrollUp = false;
+            readyToScrollDown = false;
+        }
+    });
 
     window.addEventListener('touchend', () => {
         isTouching = false;
+        readyToScrollUp = false;
+        readyToScrollDown = false;
     });
 
     // Top 버튼
