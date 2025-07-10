@@ -13,6 +13,7 @@ window.addEventListener('resize', setViewportHeight);
 document.addEventListener('DOMContentLoaded', () => {
     window.isSlideInitialized = false;
 
+    // === 섹션 및 요소 참조
     const sections = document.querySelectorAll('.full_section');
     const footer = document.querySelector('footer');
     const topBtn = document.querySelector('.top_btn');
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     header.classList.add('white');
     fullpageNav.classList.add('white');
 
+    // === 탑 버튼, 내비게이션 갱신
     const updateTopButton = () => {
         const currentSection = scrollSections[currentIndex];
         const isHidden = currentSection.classList.contains('main') || currentSection.tagName === 'FOOTER';
@@ -49,17 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         header.classList.toggle('white', isWhite);
         fullpageNav.classList.toggle('white', isWhite);
 
-        navItems.forEach((li, i) => {
-            li.classList.toggle('on', i === navIndex);
-        });
-
-        headerNavItems.forEach((li, i) => {
-            li.classList.toggle('on', i === navIndex);
-        });
+        navItems.forEach((li, i) => li.classList.toggle('on', i === navIndex));
+        headerNavItems.forEach((li, i) => li.classList.toggle('on', i === navIndex));
 
         updateTopButton();
     };
 
+    // === 부드러운 스크롤 함수
     window.smoothScrollTo = (targetY, duration = 1000) => {
         const startY = window.scrollY;
         const distance = targetY - startY;
@@ -81,18 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(animate);
     };
 
+    // === 인덱스로 섹션 스크롤
     window.scrollToIndex = (index) => {
         if (index < 0 || index > maxIndex) return;
         isAnimating = true;
 
         const target = scrollSections[index];
-        const isLeavingFooter = scrollSections[currentIndex] ?.tagName === 'FOOTER';
+        const isLeavingFooter = scrollSections[currentIndex]?.tagName === 'FOOTER';
 
         if (isLeavingFooter && index < currentIndex) {
             justLeftFooter = true;
-            setTimeout(() => {
-                justLeftFooter = false;
-            }, 500);
+            setTimeout(() => { justLeftFooter = false; }, 500);
         }
 
         const targetY = target.offsetTop;
@@ -117,87 +114,71 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // === 휠 이벤트 처리
     const handleScroll = (direction) => {
         if (isAnimating) return;
 
         const nextIndex =
-            direction === 'down' && currentIndex < maxIndex ?
-            currentIndex + 1 :
-            direction === 'up' && currentIndex > 0 ?
-            currentIndex - 1 :
-            null;
+            direction === 'down' && currentIndex < maxIndex ? currentIndex + 1 :
+            direction === 'up' && currentIndex > 0 ? currentIndex - 1 : null;
 
-        if (nextIndex !== null) {
-            scrollToIndex(nextIndex);
-        }
+        if (nextIndex !== null) scrollToIndex(nextIndex);
     };
 
-    // Wheel
     window.addEventListener('wheel', (e) => {
-    if (window.isFullpageLocked) return;
+        if (window.isFullpageLocked) return;
 
-    const deltaY = e.deltaY;
-    const direction = deltaY > 0 ? 'down' : 'up';
-    const targetInner = e.target.closest('.inner');
+        const deltaY = e.deltaY;
+        const direction = deltaY > 0 ? 'down' : 'up';
+        const targetInner = e.target.closest('.inner');
 
-    if (targetInner && !justLeftFooter) {
-        const scrollTop = targetInner.scrollTop;
-        const scrollHeight = targetInner.scrollHeight;
-        const clientHeight = targetInner.clientHeight;
+        if (targetInner && !justLeftFooter) {
+            const scrollTop = targetInner.scrollTop;
+            const scrollHeight = targetInner.scrollHeight;
+            const clientHeight = targetInner.clientHeight;
 
-        const isScrollable = scrollHeight > clientHeight;
-        const isAtTop = scrollTop <= 0;
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+            const isScrollable = scrollHeight > clientHeight;
+            const isAtTop = scrollTop <= 0;
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
-        if (!isScrollable) {
+            if (!isScrollable) {
+                e.preventDefault();
+                handleScroll(direction);
+                return;
+            }
+
+            e.preventDefault();
+            targetInner.scrollTop += deltaY;
+
+            if (direction === 'up' && isAtTop) {
+                if (readyToScrollUp && reachedTopOnce) {
+                    handleScroll('up');
+                    readyToScrollUp = reachedTopOnce = false;
+                } else {
+                    readyToScrollUp = true;
+                    readyToScrollDown = false;
+                    setTimeout(() => { if (readyToScrollUp) reachedTopOnce = true; }, 80);
+                }
+            } else if (direction === 'down' && isAtBottom) {
+                if (readyToScrollDown && reachedBottomOnce) {
+                    handleScroll('down');
+                    readyToScrollDown = reachedBottomOnce = false;
+                } else {
+                    readyToScrollDown = true;
+                    readyToScrollUp = false;
+                    setTimeout(() => { if (readyToScrollDown) reachedBottomOnce = true; }, 80);
+                }
+            } else {
+                readyToScrollUp = readyToScrollDown = false;
+            }
+
+        } else {
             e.preventDefault();
             handleScroll(direction);
-            return;
         }
+    }, { passive: false });
 
-        // ✅ 강제로 스크롤 시키기 (CSS overflow-y: hidden 상태에서도 작동함)
-        e.preventDefault();
-        targetInner.scrollTop += deltaY;
-
-        // ✅ 두 번 시도 조건 처리
-        if (direction === 'up' && isAtTop) {
-            if (readyToScrollUp && reachedTopOnce) {
-                handleScroll('up');
-                readyToScrollUp = false;
-                reachedTopOnce = false;
-            } else {
-                readyToScrollUp = true;
-                readyToScrollDown = false;
-                setTimeout(() => {
-                    if (readyToScrollUp) reachedTopOnce = true;
-                }, 80);
-            }
-        } else if (direction === 'down' && isAtBottom) {
-            if (readyToScrollDown && reachedBottomOnce) {
-                handleScroll('down');
-                readyToScrollDown = false;
-                reachedBottomOnce = false;
-            } else {
-                readyToScrollDown = true;
-                readyToScrollUp = false;
-                setTimeout(() => {
-                    if (readyToScrollDown) reachedBottomOnce = true;
-                }, 80);
-            }
-        } else {
-            readyToScrollUp = false;
-            readyToScrollDown = false;
-        }
-
-    } else {
-        // inner 없는 경우 → 일반 섹션 이동
-        e.preventDefault();
-        handleScroll(direction);
-    }
-}, { passive: false });
-
-
-    // Touch
+    // === 터치 스크롤 처리
     let touchStartY = 0;
     let lastTouchY = 0;
     let isTouching = false;
@@ -206,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('touchstart', (e) => {
         if (window.isFullpageLocked) return;
-
         touchStartY = e.touches[0].clientY;
         lastTouchY = touchStartY;
         isTouching = true;
@@ -237,10 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 수동 스크롤
         inner.scrollTop += deltaY;
 
-        // 다시 확인
         const newScrollTop = inner.scrollTop;
         const newIsAtTop = newScrollTop <= 0;
         const newIsAtBottom = newScrollTop + clientHeight >= scrollHeight - 1;
@@ -249,8 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (readyToScrollDown && reachedBottomOnce) {
                 handleScroll('down');
                 isTouching = false;
-                readyToScrollDown = false;
-                reachedBottomOnce = false;
+                readyToScrollDown = reachedBottomOnce = false;
             } else {
                 readyToScrollDown = true;
             }
@@ -258,8 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (readyToScrollUp && reachedTopOnce) {
                 handleScroll('up');
                 isTouching = false;
-                readyToScrollUp = false;
-                reachedTopOnce = false;
+                readyToScrollUp = reachedTopOnce = false;
             } else {
                 readyToScrollUp = true;
             }
@@ -268,18 +244,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('touchend', () => {
         isTouching = false;
-
-        // 이제 '끝에 도달했을 경우만' 진짜 다음에 넘어갈 수 있게
         if (readyToScrollUp) reachedTopOnce = true;
         if (readyToScrollDown) reachedBottomOnce = true;
     });
 
-    // Top 버튼
+    // === 탑 버튼 클릭
     topBtn.addEventListener('click', () => {
         scrollToIndex(0);
     });
 
-    // fullpage_nav 클릭
+    // === 내비게이션 클릭
     navItems.forEach((li, i) => {
         li.addEventListener('click', () => {
             if (isAnimating) return;
@@ -291,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // header 메뉴 클릭
+    // === 헤더 메뉴 클릭
     headerNavItems.forEach((li, i) => {
         li.addEventListener('click', () => {
             if (isAnimating) return;

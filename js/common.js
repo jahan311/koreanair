@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
     AOS.init();
-  
+
     const moNavBtn = document.querySelector('.mo_nav_btn');
     const moNav = document.querySelector('.mo_nav');
     const wrap = document.querySelector('.wrap');
     const moNavItems = moNav.querySelectorAll('ul li');
     let scrollY = 0;
 
+    // === 모바일 내비게이션 토글 ===
     moNavBtn?.addEventListener('click', () => {
         const isMenuOpening = moNav.classList.contains('hide');
         if (isMenuOpening) {
@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         moNavBtn.classList.toggle('on');
     });
 
+    // === 모바일 메뉴 클릭 시 섹션 이동 ===
     moNavItems.forEach((li, i) => {
         li.addEventListener('click', () => {
             const targetSection = window.navTargetSections[i];
@@ -36,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             moNav.classList.add('hide');
             moNavBtn.classList.remove('on');
-
             wrap.style.position = '';
             wrap.style.top = '';
             wrap.style.width = '';
@@ -54,9 +54,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // === contact 버튼 클릭 시 sc04로 이동 ===
     const contactBtn = document.querySelector('.main .go_contact_btn');
     if (contactBtn) {
-        contactBtn.addEventListener('click', function (e) {
+        contactBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const target = document.querySelector('.sc04');
             const index = window.scrollSections.indexOf(target);
@@ -72,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // === 커스텀 셀렉트박스 및 텍스트 입력 카운터 ===
     const selectBox = document.querySelector('.custom_select');
     if (selectBox) {
         const selectBtn = selectBox.querySelector('.select_btn');
@@ -102,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// === 슬라이더 기능 ===
 let sliderInterval = null;
 let currentSlideIndex = 1;
 let isSliderMounted = false;
@@ -109,12 +112,15 @@ let isSliderMounted = false;
 function initSlider() {
     if (isSliderMounted) return;
     isSliderMounted = true;
+
     const track = document.querySelector(".slider_track");
     const slides = Array.from(track.children);
     const firstClone = slides[0].cloneNode(true);
     const lastClone = slides[slides.length - 1].cloneNode(true);
+
     track.insertBefore(lastClone, slides[0]);
     track.appendChild(firstClone);
+
     const total = slides.length + 2;
     currentSlideIndex = 1;
 
@@ -170,6 +176,7 @@ function restartSlider() {
     startSlider();
 }
 
+// === 탭 슬라이더 기능 ===
 let tabSliderInterval = null;
 let isTabSliderInitialized = false;
 let currentTabIndex = 0;
@@ -177,6 +184,7 @@ let currentTabIndex = 0;
 function initTabSlider() {
     if (isTabSliderInitialized) return;
     isTabSliderInitialized = true;
+
     const sc02 = document.querySelector('.sc02');
     const tabItems = sc02.querySelectorAll('.tab li');
     const contentItems = sc02.querySelectorAll('.tab_contents li');
@@ -234,6 +242,7 @@ function stopTabSlider() {
     tabSliderInterval = null;
 }
 
+// === 전역 등록 ===
 window.initSlider = initSlider;
 window.startSlider = startSlider;
 window.stopSlider = stopSlider;
