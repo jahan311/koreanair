@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.header');
     const headerNavItems = document.querySelectorAll('header nav ul li:not(.login_btn)');
 
-    // 전역 공유
     window.navTargetSections = Array.from(sections).filter(section => !section.classList.contains('main'));
     window.scrollSections = [...sections, footer];
 
@@ -30,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxIndex = scrollSections.length - 1;
     let justLeftFooter = false;
 
-    // 초기 white 적용
     header.classList.add('white');
     fullpageNav.classList.add('white');
 
@@ -88,28 +86,30 @@ document.addEventListener('DOMContentLoaded', () => {
         isAnimating = true;
 
         const target = scrollSections[index];
-        const isFooter = scrollSections[currentIndex]?.tagName === 'FOOTER';
+        const isLeavingFooter = scrollSections[currentIndex]?.tagName === 'FOOTER';
 
-        if (isFooter && index < currentIndex) {
+        if (isLeavingFooter && index < currentIndex) {
             justLeftFooter = true;
-            setTimeout(() => { justLeftFooter = false }, 500);
+            setTimeout(() => { justLeftFooter = false; }, 500);
         }
 
         const targetY = target.offsetTop;
-        const isTargetFooter = target.tagName === 'FOOTER';
-        smoothScrollTo(targetY, isTargetFooter ? 1400 : 1000);
+        const isFooter = target.tagName === 'FOOTER';
+        smoothScrollTo(targetY, isFooter ? 1400 : 1000);
 
         currentIndex = index;
         updateNav();
 
         if (target.classList.contains('sc01')) {
-            initSlider(); startSlider();
+            initSlider();
+            startSlider();
         } else {
             stopSlider();
         }
 
         if (target.classList.contains('sc02')) {
-            initTabSlider(); startTabSlider();
+            initTabSlider();
+            startTabSlider();
         } else {
             stopTabSlider();
         }
@@ -171,37 +171,39 @@ document.addEventListener('DOMContentLoaded', () => {
         const endY = e.changedTouches[0].clientY;
         const delta = endY - startY;
 
-        const touchedInner = e.target.closest('.inner');
+        if (Math.abs(delta) < 30) return;
 
-        if (justLeftFooter) {
-            if (delta > 30) handleScroll('up');
-            else if (delta < -30) handleScroll('down');
-            return;
-        }
+        const direction = delta > 0 ? 'up' : 'down';
+        const inner = document.querySelectorAll('.inner')[currentIndex];
+        
+        let didScroll = false;
 
-        if (touchedInner) {
-            const scrollTop = touchedInner.scrollTop;
-            const scrollHeight = touchedInner.scrollHeight;
-            const clientHeight = touchedInner.clientHeight;
-
+        if (inner) {
+            const scrollTop = inner.scrollTop;
+            const scrollHeight = inner.scrollHeight;
+            const clientHeight = inner.clientHeight;
             const isScrollable = scrollHeight > clientHeight;
             const isAtTop = scrollTop === 0;
             const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
-            // 내부 스크롤이 불가능하거나 끝에 닿았으면 풀페이지 스크롤 허용
-            if (!isScrollable || (delta > 30 && isAtTop) || (delta < -30 && isAtBottom)) {
-                if (delta > 30) handleScroll('up');
-                else if (delta < -30) handleScroll('down');
+            if (isScrollable) {
+                if (direction === 'up' && !isAtTop) {
+                    // 위로 스크롤 가능한 경우 → inner 먼저 스크롤됨 (아무것도 안 함)
+                    didScroll = true;
+                }
+                if (direction === 'down' && !isAtBottom) {
+                    // 아래로 스크롤 가능한 경우 → inner 먼저 스크롤됨
+                    didScroll = true;
+                }
             }
-
-            return; // 내부 스크롤 중이면 풀페이지는 무시
         }
 
-        // 기본: 일반 영역
-        if (delta > 30) handleScroll('up');
-        else if (delta < -30) handleScroll('down');
+        // inner가 스크롤 안 됐으면 → fullpage 섹션 이동
+        if (!didScroll) {
+            if (direction === 'up') handleScroll('up');
+            else if (direction === 'down') handleScroll('down');
+        }
     });
-
 
     // Top 버튼
     topBtn.addEventListener('click', () => {
@@ -220,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // header nav 클릭
+    // header 메뉴 클릭
     headerNavItems.forEach((li, i) => {
         li.addEventListener('click', () => {
             if (isAnimating) return;
