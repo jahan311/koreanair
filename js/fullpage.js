@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.header');
     const headerNavItems = document.querySelectorAll('header nav ul li:not(.login_btn)');
 
+    // 전역 공유
     window.navTargetSections = Array.from(sections).filter(section => !section.classList.contains('main'));
     window.scrollSections = [...sections, footer];
 
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxIndex = scrollSections.length - 1;
     let justLeftFooter = false;
 
+    // 초기 white 적용
     header.classList.add('white');
     fullpageNav.classList.add('white');
 
@@ -86,30 +88,28 @@ document.addEventListener('DOMContentLoaded', () => {
         isAnimating = true;
 
         const target = scrollSections[index];
-        const isLeavingFooter = scrollSections[currentIndex]?.tagName === 'FOOTER';
+        const isFooter = scrollSections[currentIndex]?.tagName === 'FOOTER';
 
-        if (isLeavingFooter && index < currentIndex) {
+        if (isFooter && index < currentIndex) {
             justLeftFooter = true;
-            setTimeout(() => { justLeftFooter = false; }, 500);
+            setTimeout(() => { justLeftFooter = false }, 500);
         }
 
         const targetY = target.offsetTop;
-        const isFooter = target.tagName === 'FOOTER';
-        smoothScrollTo(targetY, isFooter ? 1400 : 1000);
+        const isTargetFooter = target.tagName === 'FOOTER';
+        smoothScrollTo(targetY, isTargetFooter ? 1400 : 1000);
 
         currentIndex = index;
         updateNav();
 
         if (target.classList.contains('sc01')) {
-            initSlider();
-            startSlider();
+            initSlider(); startSlider();
         } else {
             stopSlider();
         }
 
         if (target.classList.contains('sc02')) {
-            initTabSlider();
-            startTabSlider();
+            initTabSlider(); startTabSlider();
         } else {
             stopTabSlider();
         }
@@ -178,21 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const touchedInner = e.target.closest('.inner');
-        if (touchedInner) {
-            const scrollTop = touchedInner.scrollTop;
-            const scrollHeight = touchedInner.scrollHeight;
-            const clientHeight = touchedInner.clientHeight;
-
-            const isAtTop = scrollTop === 0;
-            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-
-            if (delta > 30 && isAtTop) {
-                handleScroll('up');
-            } else if (delta < -30 && isAtBottom) {
-                handleScroll('down');
-            }
-            return;
-        }
+        if (touchedInner) return;
 
         if (delta > 30) handleScroll('up');
         else if (delta < -30) handleScroll('down');
@@ -215,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // header 메뉴 클릭
+    // header nav 클릭
     headerNavItems.forEach((li, i) => {
         li.addEventListener('click', () => {
             if (isAnimating) return;
