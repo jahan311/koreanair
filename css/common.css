@@ -1058,7 +1058,21 @@ body {
   background: #fafafc;
 }
 .wrap .fullpage .full_section.sc02 .inner {
-  padding: 15rem 0 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 .wrap .fullpage .full_section.sc02 .inner .tit {
   font-family: "Pretendard", sans-serif;
@@ -1983,6 +1997,10 @@ body {
     width: 8rem;
     height: 8rem;
   }
+  .wrap .fullpage .full_section.sc02 .inner {
+    display: block;
+    padding: 15rem 0 0;
+  }
   .wrap .fullpage .full_section.sc02 .inner .tab_box {
     display: block;
     margin-top: 2.5rem;
@@ -2459,6 +2477,7 @@ body {
     max-width: 20rem;
   }
   .wrap .fullpage .full_section.sc02 .inner {
+    display: block;
     padding: 9.5rem 2rem 6rem;
   }
   .wrap .fullpage .full_section.sc02 .inner .tit {
