@@ -171,18 +171,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const endY = e.changedTouches[0].clientY;
         const delta = endY - startY;
 
+        const touchedInner = e.target.closest('.inner');
+
         if (justLeftFooter) {
             if (delta > 30) handleScroll('up');
             else if (delta < -30) handleScroll('down');
             return;
         }
 
-        const touchedInner = e.target.closest('.inner');
-        if (touchedInner) return;
+        if (touchedInner) {
+            const scrollTop = touchedInner.scrollTop;
+            const scrollHeight = touchedInner.scrollHeight;
+            const clientHeight = touchedInner.clientHeight;
 
+            const isScrollable = scrollHeight > clientHeight;
+            const isAtTop = scrollTop === 0;
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+            // 내부 스크롤이 불가능하거나 끝에 닿았으면 풀페이지 스크롤 허용
+            if (!isScrollable || (delta > 30 && isAtTop) || (delta < -30 && isAtBottom)) {
+                if (delta > 30) handleScroll('up');
+                else if (delta < -30) handleScroll('down');
+            }
+
+            return; // 내부 스크롤 중이면 풀페이지는 무시
+        }
+
+        // 기본: 일반 영역
         if (delta > 30) handleScroll('up');
         else if (delta < -30) handleScroll('down');
     });
+
 
     // Top 버튼
     topBtn.addEventListener('click', () => {
