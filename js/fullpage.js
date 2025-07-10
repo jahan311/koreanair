@@ -161,47 +161,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Touch
     let startY = 0;
+    let didMove = false;
+
     window.addEventListener('touchstart', (e) => {
         startY = e.touches[0].clientY;
+        didMove = false;
     });
 
-    window.addEventListener('touchend', (e) => {
-        if (window.isFullpageLocked) return;
+    window.addEventListener('touchmove', (e) => {
+        didMove = true;
+    });
 
-        const endY = e.changedTouches[0].clientY;
-        const delta = endY - startY;
+window.addEventListener('touchend', (e) => {
+    if (window.isFullpageLocked) return;
 
-        if (Math.abs(delta) < 30) return; // 너무 짧으면 무시
+    const endY = e.changedTouches[0].clientY;
+    const delta = endY - startY;
 
-        const direction = delta > 0 ? 'up' : 'down';
-        const inner = document.querySelectorAll('.inner')[currentIndex];
+    if (Math.abs(delta) < 30) return;
 
-        let allowSectionScroll = true;
+    const direction = delta > 0 ? 'up' : 'down';
 
-        if (inner) {
-            const scrollTop = inner.scrollTop;
-            const scrollHeight = inner.scrollHeight;
-            const clientHeight = inner.clientHeight;
+    const inner = document.querySelectorAll('.inner')[currentIndex];
 
-            const isScrollable = scrollHeight > clientHeight;
-            const isAtTop = scrollTop === 0;
-            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    let allowSectionScroll = true;
 
-            if (isScrollable) {
-                if (direction === 'up' && !isAtTop) {
-                    allowSectionScroll = false;
-                }
-                if (direction === 'down' && !isAtBottom) {
-                    allowSectionScroll = false;
-                }
+    if (inner) {
+        const scrollTop = inner.scrollTop;
+        const scrollHeight = inner.scrollHeight;
+        const clientHeight = inner.clientHeight;
+
+        const isScrollable = scrollHeight > clientHeight;
+        const isAtTop = scrollTop === 0;
+        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+        if (isScrollable) {
+            if (direction === 'up' && !isAtTop) {
+                allowSectionScroll = false;
+            } else if (direction === 'down' && !isAtBottom) {
+                allowSectionScroll = false;
+            } else if (didMove) {
+                // 실제 scrollable 상태에서 스크롤 발생했으면 → inner에 맡김
+                allowSectionScroll = false;
             }
         }
+    }
 
-        if (allowSectionScroll) {
-            if (direction === 'up') handleScroll('up');
-            else if (direction === 'down') handleScroll('down');
-        }
-    });
+    if (allowSectionScroll) {
+        if (direction === 'up') handleScroll('up');
+        else if (direction === 'down') handleScroll('down');
+    }
+});
 
     // Top 버튼
     topBtn.addEventListener('click', () => {
