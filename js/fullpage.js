@@ -171,35 +171,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const endY = e.changedTouches[0].clientY;
         const delta = endY - startY;
 
-        if (Math.abs(delta) < 30) return;
+        if (Math.abs(delta) < 30) return; // 너무 짧으면 무시
 
         const direction = delta > 0 ? 'up' : 'down';
         const inner = document.querySelectorAll('.inner')[currentIndex];
-        
-        let didScroll = false;
+
+        let allowSectionScroll = true;
 
         if (inner) {
             const scrollTop = inner.scrollTop;
             const scrollHeight = inner.scrollHeight;
             const clientHeight = inner.clientHeight;
+
             const isScrollable = scrollHeight > clientHeight;
             const isAtTop = scrollTop === 0;
             const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
             if (isScrollable) {
                 if (direction === 'up' && !isAtTop) {
-                    // 위로 스크롤 가능한 경우 → inner 먼저 스크롤됨 (아무것도 안 함)
-                    didScroll = true;
+                    allowSectionScroll = false;
                 }
                 if (direction === 'down' && !isAtBottom) {
-                    // 아래로 스크롤 가능한 경우 → inner 먼저 스크롤됨
-                    didScroll = true;
+                    allowSectionScroll = false;
                 }
             }
         }
 
-        // inner가 스크롤 안 됐으면 → fullpage 섹션 이동
-        if (!didScroll) {
+        if (allowSectionScroll) {
             if (direction === 'up') handleScroll('up');
             else if (direction === 'down') handleScroll('down');
         }
